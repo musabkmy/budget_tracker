@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
+import 'app.dart';
+import 'core/dependency_injection/di.dart';
+import 'core/settings/settings_controller.dart';
+import 'core/settings/settings_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// waiting to inject the application dependencies
+  await setupDi();
+
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
