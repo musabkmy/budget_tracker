@@ -1,37 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'head_category.dart';
+part of 'budget_period.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class HeadCategoryAdapter extends TypeAdapter<HeadCategory> {
+class BudgetPeriodAdapter extends TypeAdapter<BudgetPeriod> {
   @override
-  final int typeId = 3;
+  final int typeId = 15;
 
   @override
-  HeadCategory read(BinaryReader reader) {
+  BudgetPeriod read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return HeadCategory(
-      localizedNames: (fields[1] as Map).cast<String, String>(),
-      showList: fields[2] as bool,
+    return BudgetPeriod(
+      fields[2] as BudgetPeriodType,
+      fields[0] as String,
+      fields[1] as int,
     );
   }
 
   @override
-  void write(BinaryWriter writer, HeadCategory obj) {
+  void write(BinaryWriter writer, BudgetPeriod obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.label)
       ..writeByte(1)
-      ..write(obj.localizedNames)
+      ..write(obj.periodInDays)
       ..writeByte(2)
-      ..write(obj.showList);
+      ..write(obj.budgetPeriodType);
   }
 
   @override
@@ -40,7 +41,7 @@ class HeadCategoryAdapter extends TypeAdapter<HeadCategory> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is HeadCategoryAdapter &&
+      other is BudgetPeriodAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

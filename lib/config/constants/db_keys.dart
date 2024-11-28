@@ -1,5 +1,6 @@
 /// Application Hive DataBase Keys for caching purposes
 class DbKeys {
-  /// App Head Categories and Categories
-  static const dbAppCategories = 'AppCategories';
+  static const dbDefaultData = 'DefaultData';
+  static const dbBudgets = 'BudgetsData';
+  static const dbTransactions = 'Transactions';
 }

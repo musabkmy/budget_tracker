@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app.dart';
-import 'core/dependency_injection/di.dart';
+import 'config/dependency_injection/di.dart';
 import 'core/settings/settings_controller.dart';
 import 'core/settings/settings_service.dart';
 

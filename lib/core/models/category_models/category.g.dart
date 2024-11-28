@@ -17,12 +17,14 @@ class CategoryAdapter extends TypeAdapter<Category> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Category(
+      id: fields[1] as String,
       headCategoryId: fields[0] as String,
       localizedNames: (fields[2] as Map).cast<String, String>(),
       theme: fields[3] as ItemTheme,
-      expenseType: fields[4] as ExpenseType,
-      isSaving: fields[5] as bool,
-      isRemoved: fields[6] as bool,
+      expenseType:
+          fields[4] == null ? ExpenseType.variable : fields[4] as ExpenseType,
+      isSaving: fields[5] == null ? false : fields[5] as bool,
+      isRemoved: fields[6] == null ? false : fields[6] as bool,
     );
   }
 

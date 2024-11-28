@@ -46,7 +46,12 @@ Future<Directory> testSetupDi() async {
   // di.registerSingleton(InternetConnectionHelper());
 
   /// Hive DataBase
-  final testDir = Directory.systemTemp.createTempSync();
+  // final testDir = Directory.systemTemp.createTempSync();
+  final testDir = Directory(
+      '/Users/nasracentre/Musab/Projects/budget_tracker/test/data_data');
+  if (!testDir.existsSync()) {
+    testDir.createSync(recursive: true);
+  }
   Hive.init(testDir.path);
 
   registerAdapters();

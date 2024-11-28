@@ -1,21 +1,31 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: prefer_const_constructors
+import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category_type.dart';
+import 'package:budget_tracker/models/base_category_models/base_category_model.dart';
 import 'package:budget_tracker/models/base_category_models/expense_type.dart';
-import '../../../../../models/base_category_models/base_category_model.dart';
+import 'package:budget_tracker/models/item_theme.dart';
+import 'package:hive/hive.dart';
+import 'package:budget_tracker/hive_helper/hive_types.dart';
+import 'package:budget_tracker/hive_helper/hive_adapters.dart';
+import 'package:budget_tracker/hive_helper/fields/budget_category_fields.dart';
+import 'package:uuid/uuid.dart';
 
-import 'budget_breakdown.dart';
+part 'budget_category.g.dart';
 
-///define what is the category relation to the budget
-///[income] and [expense]
-enum BudgetCategoryType { income, expense }
-
+@HiveType(
+    typeId: HiveTypes.budgetCategory, adapterName: HiveAdapters.budgetCategory)
 class BudgetCategory extends BaseCategory {
+  @HiveField(BudgetCategoryFields.hasCustomHeadCategory, defaultValue: false)
   final bool hasCustomHeadCategory;
+  @HiveField(BudgetCategoryFields.budgetCategoryType,
+      defaultValue: BudgetCategoryType.expense)
   BudgetCategoryType budgetCategoryType;
+  @HiveField(BudgetCategoryFields.balance, defaultValue: 0)
   double balance;
+  @HiveField(BudgetCategoryFields.plannedBalance, defaultValue: 0)
   double plannedBalance;
 
   BudgetCategory({
+    required super.id,
     required super.headCategoryId,
     required super.localizedNames,
     required super.theme,
@@ -28,11 +38,13 @@ class BudgetCategory extends BaseCategory {
     this.plannedBalance = 0,
   });
 
+  ///For generating Key,Value instance from default value
   ///will generate a new [id] for each item
   static Map<String, BudgetCategory> getIdMap(List<BudgetCategory> temps) {
     Map<String, BudgetCategory> items = {};
     for (var element in temps) {
       var item = BudgetCategory(
+        id: const Uuid().v4(),
         headCategoryId: element.headCategoryId,
         localizedNames: element.localizedNames,
         theme: element.theme,
@@ -54,11 +66,6 @@ class BudgetCategory extends BaseCategory {
               : isFixedExpense
                   ? BudgetBreakdownType.fixedExpense
                   : BudgetBreakdownType.variousExpense;
-
-  @override
-  void changeExpenseType() {
-    expenseType = isFixedExpense ? ExpenseType.variable : ExpenseType.fixed;
-  }
 
   void updateBalance({required bool fromCard, required double balance}) {
     fromCard ? balance += balance : balance -= balance;

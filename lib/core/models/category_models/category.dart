@@ -10,6 +10,7 @@ part 'category.g.dart';
 @HiveType(typeId: HiveTypes.category, adapterName: HiveAdapters.category)
 class Category extends BaseCategory {
   Category({
+    required super.id,
     required super.headCategoryId,
     required super.localizedNames,
     required super.theme,

@@ -2,7 +2,6 @@ import 'package:hive/hive.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';
 import 'package:budget_tracker/hive_helper/hive_adapters.dart';
 import 'package:budget_tracker/hive_helper/fields/head_category_fields.dart';
-import 'package:uuid/uuid.dart';
 
 part 'head_category.g.dart';
 
@@ -17,10 +16,11 @@ class HeadCategory extends HiveObject {
   bool showList;
 
   HeadCategory({
+    required this.id,
     required this.localizedNames,
     this.showList = false,
     // ignore: prefer_const_constructors
-  }) : id = Uuid().v1();
+  });
 
   @override
   String toString() =>

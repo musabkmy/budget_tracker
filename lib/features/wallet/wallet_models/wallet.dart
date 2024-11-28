@@ -1,30 +1,41 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-// ignore_for_file: prefer_const_constructors
+import 'package:budget_tracker/features/wallet/wallet_models/debt_wallet.dart';
+import 'package:budget_tracker/features/wallet/wallet_models/saving_wallet.dart';
+import 'package:budget_tracker/features/wallet/wallet_models/spending_wallet.dart';
+import 'package:budget_tracker/hive_helper/fields/wallet_fields.dart';
+import 'package:budget_tracker/hive_helper/hive_types.dart';
+import 'package:hive/hive.dart';
 
 import '../../../models/item_theme.dart';
-import 'wallet_type.dart';
-import 'package:uuid/uuid.dart';
 
-abstract class Wallet {
-  // UUID generator
-
+@HiveType(typeId: HiveTypes.wallet)
+abstract class Wallet extends HiveObject {
+  @HiveField(WalletFields.id)
   final String? id;
+  @HiveField(WalletFields.localizedNames)
   Map<String, String> localizedNames;
+  @HiveField(WalletFields.localizedDescription)
   Map<String, String> localizedDescription;
-  final WalletTypeKey type;
+  @HiveField(WalletFields.walletTheme)
   ItemTheme walletTheme;
+  @HiveField(WalletFields.addToNetWorth, defaultValue: false)
   bool addToNetWorth;
 
   Wallet({
+    required this.id,
     required this.localizedNames,
     required this.localizedDescription,
-    required this.type,
     required this.walletTheme,
     this.addToNetWorth = false,
-  }) : id = Uuid().v4();
+  });
 
   @override
   String toString() {
-    return 'Wallet(id: $id, localizedNames: $localizedNames, localizedDescription: $localizedDescription, type: $type, walletTheme: $walletTheme, addToNetWorth: $addToNetWorth)';
+    return 'Wallet(id: $id, localizedNames: $localizedNames, localizedDescription: $localizedDescription,walletTheme: $walletTheme, addToNetWorth: $addToNetWorth)';
   }
+}
+
+extension WalletExt on Wallet {
+  bool get isSpendingWallet => this is SpendingWallet;
+  bool get isSavingWallet => this is SavingWallet;
+  bool get isDebtWallet => this is DebtWallet;
 }

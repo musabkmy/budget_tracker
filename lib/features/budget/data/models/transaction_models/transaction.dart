@@ -1,67 +1,31 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:uuid/uuid.dart';
+import 'package:budget_tracker/features/budget/data/models/transaction_models/category_to_wallet_transaction.dart';
+import 'package:budget_tracker/features/budget/data/models/transaction_models/wallet_to_category_transaction.dart';
+import 'package:budget_tracker/features/budget/data/models/transaction_models/wallet_to_wallet_with_category_transaction.dart';
+import 'package:budget_tracker/hive_helper/fields/transaction_fields.dart';
+import 'package:budget_tracker/hive_helper/hive_types.dart';
+import 'package:hive/hive.dart';
 
-sealed class Transaction {
+@HiveType(typeId: HiveTypes.transaction)
+abstract class Transaction extends HiveObject {
+  @HiveField(TransactionFields.id)
   final String id;
+  @HiveField(TransactionFields.budgetId)
   String budgetId;
+  @HiveField(TransactionFields.amount)
   double amount;
+  @HiveField(TransactionFields.description, defaultValue: '')
   String description;
+  @HiveField(TransactionFields.date)
   DateTime date;
 
   Transaction(
-      {required this.budgetId,
+      {required this.id,
+      required this.budgetId,
       required this.amount,
       required this.date,
-      this.description = ''})
-      : id = Uuid().v4();
-}
-
-class CategoryToWalletTransaction extends Transaction {
-  final String fromCategoryId;
-  final String headCategoryId;
-  final String toWalletId;
-
-  CategoryToWalletTransaction(
-      {required super.budgetId,
-      required super.amount,
-      required super.date,
-      super.description,
-      required this.fromCategoryId,
-      required this.headCategoryId,
-      required this.toWalletId});
-}
-
-class WalletToCategoryTransaction extends Transaction {
-  final String fromWalletId;
-  final String headCategoryId;
-  final String toCategoryId;
-
-  WalletToCategoryTransaction(
-      {required super.budgetId,
-      required super.amount,
-      required super.date,
-      super.description,
-      required this.fromWalletId,
-      required this.headCategoryId,
-      required this.toCategoryId});
-}
-
-class WalletToWalletWithCategoryTransaction extends Transaction {
-  final String sourceWalletId;
-  final String destinationWalletId;
-  final String categoryId;
-  final String headCategoryId;
-
-  WalletToWalletWithCategoryTransaction(
-      {required super.budgetId,
-      required super.amount,
-      required super.date,
-      super.description,
-      required this.sourceWalletId,
-      required this.destinationWalletId,
-      required this.headCategoryId,
-      required this.categoryId});
+      this.description = ''});
 }
 
 extension TransactionExt on Transaction {
