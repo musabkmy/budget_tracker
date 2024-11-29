@@ -9,11 +9,11 @@ import 'package:budget_tracker/features/wallet/wallet_models/saving_wallet.dart'
 import 'package:budget_tracker/features/wallet/wallet_models/spending_wallet.dart';
 import 'package:budget_tracker/hive_helper/expense_type_adapter.dart';
 import 'package:budget_tracker/hive_helper/icon_data_adapter.dart';
-import 'package:budget_tracker/models/category_models/category.dart';
-import 'package:budget_tracker/models/styled_text.dart';
-import 'package:budget_tracker/models/styled_text_key.dart';
-import 'package:budget_tracker/models/item_theme.dart';
-import 'package:budget_tracker/models/category_models/head_category.dart';
+import 'package:budget_tracker/core/models/category_models/category.dart';
+import 'package:budget_tracker/core/models/styled_text.dart';
+import 'package:budget_tracker/core/models/styled_text_key.dart';
+import 'package:budget_tracker/core/models/item_theme.dart';
+import 'package:budget_tracker/core/models/category_models/head_category.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category.dart';

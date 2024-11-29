@@ -2,7 +2,7 @@ import 'package:budget_tracker/features/wallet/wallet_models/wallet.dart';
 import 'package:budget_tracker/hive_helper/fields/saving_wallet_fields.dart';
 import 'package:budget_tracker/hive_helper/hive_adapters.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';
-import 'package:budget_tracker/models/item_theme.dart';
+import 'package:budget_tracker/core/models/item_theme.dart';
 import 'package:hive/hive.dart';
 
 part 'saving_wallet.g.dart';

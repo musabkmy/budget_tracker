@@ -1,4 +1,4 @@
-import '../../models/styled_text.dart';
+import '../models/styled_text.dart';
 
 ///get localized text
 String getLocalString(Map<String, String> localizedString, String locale) {

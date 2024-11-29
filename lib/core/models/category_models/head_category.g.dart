@@ -20,19 +20,22 @@ class HeadCategoryAdapter extends TypeAdapter<HeadCategory> {
       id: fields[0] as String,
       localizedNames: (fields[1] as Map).cast<String, String>(),
       showList: fields[2] as bool,
+      categories: (fields[3] as List).cast<Category>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, HeadCategory obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.localizedNames)
       ..writeByte(2)
-      ..write(obj.showList);
+      ..write(obj.showList)
+      ..writeByte(3)
+      ..write(obj.categories);
   }
 
   @override

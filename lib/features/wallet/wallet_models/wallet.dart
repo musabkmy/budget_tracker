@@ -5,7 +5,7 @@ import 'package:budget_tracker/hive_helper/fields/wallet_fields.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';
 import 'package:hive/hive.dart';
 
-import '../../../models/item_theme.dart';
+import '../../../core/models/item_theme.dart';
 
 @HiveType(typeId: HiveTypes.wallet)
 abstract class Wallet extends HiveObject {

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:budget_tracker/models/base_category_models/expense_type.dart';
-import 'package:budget_tracker/models/item_theme.dart';
+import 'package:budget_tracker/core/models/base_category_models/expense_type.dart';
+import 'package:budget_tracker/core/models/item_theme.dart';
 import 'package:hive/hive.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';
 import 'package:budget_tracker/hive_helper/fields/base_category_fields.dart';

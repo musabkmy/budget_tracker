@@ -1,4 +1,4 @@
-import 'package:budget_tracker/models/base_category_models/expense_type.dart';
+import 'package:budget_tracker/core/models/base_category_models/expense_type.dart';
 import 'package:hive/hive.dart';
 
 class ExpenseTypeAdapter extends TypeAdapter<ExpenseType> {
