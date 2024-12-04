@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
+import 'package:budget_tracker/features/budget/repository/budget_repository.dart';
 import 'package:budget_tracker/hive_helper/register_adapters.dart';
 
 import 'di_ex.dart';
@@ -29,16 +31,16 @@ Future<void> setupDi() async {
     budgetDataBaseService: di<BudgetDataBaseService>(),
   ));
 
-  // /// Repository
-  // // Categories
-  // di.registerSingleton(CategoriesRepository(
-  //   di<CategoriesApiProvider>(),
-  //   di<BudgetDataBaseProvider>(),
-  // ));
+  /// Repository
+  // Budget
+  di.registerSingleton(BudgetRepository(
+    di<BudgetDataBaseProvider>(),
+  ));
 
   // /// Blocs
-  // // Categories
-  // di.registerSingleton<CategoriesBloc>(CategoriesBloc(di<CategoriesRepository>()));
+  // Budget
+  di.registerSingleton<CreateBudgetBloc>(
+      CreateBudgetBloc(di<BudgetRepository>()));
 }
 
 Future<Directory> testSetupDi() async {
@@ -58,7 +60,7 @@ Future<Directory> testSetupDi() async {
 
   /// DB Services
   // Budget DataBase Service
-  di.registerSingleton(BudgetDataBaseService());
+  di.registerSingleton<BudgetDataBaseService>(BudgetDataBaseService());
   await di<BudgetDataBaseService>().initDataBase();
 
   // /// Api Providers
@@ -66,20 +68,20 @@ Future<Directory> testSetupDi() async {
 
   /// DataBase Providers
   // Categories
-  di.registerSingleton(BudgetDataBaseProvider(
+  di.registerSingleton<BudgetDataBaseProvider>(BudgetDataBaseProvider(
     budgetDataBaseService: di<BudgetDataBaseService>(),
   ));
 
   // /// Repository
-  // // Categories
-  // di.registerSingleton(CategoriesRepository(
-  //   di<CategoriesApiProvider>(),
-  //   di<BudgetDataBaseProvider>(),
-  // ));
+  // Budget
+  di.registerSingleton<BudgetRepository>(BudgetRepository(
+    di<BudgetDataBaseProvider>(),
+  ));
 
   // /// Blocs
-  // // Categories
-  // di.registerSingleton<CategoriesBloc>(CategoriesBloc(di<CategoriesRepository>()));
+  // Budget
+  di.registerSingleton<CreateBudgetBloc>(
+      CreateBudgetBloc(di<BudgetRepository>()));
 
   return testDir;
 }

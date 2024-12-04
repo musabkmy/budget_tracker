@@ -1,13 +1,23 @@
+///used for personalized message depending on the item type
+enum ExceptionItemType { item, budget }
+
 //EXCEPTIONS
+class UnknownException implements Exception {
+  UnknownException();
+}
+
 class DatabaseException implements Exception {
-  final Map<String, String> localizedMessage;
-  DatabaseException(this.localizedMessage);
+  DatabaseException();
 }
 
 class InsertFailureException extends DatabaseException {
-  InsertFailureException(super.localizedMessage);
+  InsertFailureException();
 }
 
 class ItemNotFoundException extends DatabaseException {
-  ItemNotFoundException(super.localizedMessage);
+  ItemNotFoundException();
+}
+
+class UpdateItemException extends DatabaseException {
+  UpdateItemException();
 }

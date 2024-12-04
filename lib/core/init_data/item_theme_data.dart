@@ -92,4 +92,5 @@ class ItemThemeColors {
   static const softRed = Color(0xFFFF7077);
   static const aquaBlue = Color(0xFF46D0E1);
   static const violetPurple = Color(0xFF9B41F0);
+  static const lightYellow = Color(0xFFECC699);
 }

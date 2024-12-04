@@ -4,19 +4,19 @@ abstract class InterfaceRepository<T> {
   Future<Iterable<T>> getAll();
 
   /// Remove All Data From DB
-  Future<void> removeAll();
+  Future<bool> removeAll();
 
   /// Get Item From DB
   Future<T?> getItem({required String key});
 
   /// Insert Item To DB
-  Future<void> insertItem({required String key, required T item});
+  Future<bool> insertItem({required String key, required T item});
 
   /// Update Item in DB
-  Future<void> updateItem({required String key, required T item});
+  Future<bool> updateItem({required String key, required T item});
 
   /// Remove Item in DB
-  Future<void> removeItem({required String key, required T item});
+  Future<bool> removeItem({required String key, required T item});
 
   /// is Data Available
   Future<bool> isDataAvailable();

@@ -25,7 +25,7 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   Future<Iterable<Budget>> getAll() async {
     try {
       debugPrint(
-          '_budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
+          'get all: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
       if (_budgetsBox.isOpen && _budgetsBox.isNotEmpty) {
         for (var element in _budgetsBox.keys) {
           debugPrint(element + ' key');
@@ -46,7 +46,7 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   Future<Budget?> getItem({required String key}) async {
     try {
       debugPrint(
-          '_budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
+          'get item: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty} key: $key');
       if (_budgetsBox.isOpen) {
         if (_budgetsBox.containsKey(key)) {
           return _budgetsBox.get(key);
@@ -57,24 +57,23 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
         return null;
       }
     } on ItemNotFoundException {
-      throw ItemNotFoundException;
+      throw ItemNotFoundException();
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  Future<void> insertItem({required String key, required Budget item}) async {
+  Future<bool> insertItem({required String key, required Budget item}) async {
     try {
       debugPrint(
-          '_budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
+          'insert: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty} key: $key');
       if (_budgetsBox.isOpen) {
         await _budgetsBox.put(key, item);
-        // _budgetsBox.close();
+        return true;
       } else {
         throw InsertFailureException;
       }
-      debugPrint('here');
     } on InsertFailureException {
       throw InsertFailureException;
     } catch (e) {
@@ -83,12 +82,27 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   }
 
   @override
-  Future<void> removeAll() {
+  Future<bool> updateItem({required String key, required Budget item}) async {
     try {
       debugPrint(
-          '_budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
+          'update: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty} key: $key');
+      if (await isBudgetAvailable(key)) {
+        await insertItem(key: key, item: item);
+        return true;
+      } else {
+        throw ItemNotFoundException;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool> removeAll() {
+    try {
+      debugPrint(
+          'remove all: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
       if (_budgetsBox.isOpen && _budgetsBox.isNotEmpty) {
-        debugPrint('in clear init');
         _budgetsBox.clear();
       } else {
         throw DatabaseException;
@@ -103,14 +117,8 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   }
 
   @override
-  Future<void> removeItem({required String key, required Budget item}) {
+  Future<bool> removeItem({required String key, required Budget item}) {
     // TODO: implement removeItem
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> updateItem({required String key, required Budget item}) {
-    // TODO: implement updateItem
     throw UnimplementedError();
   }
 
@@ -121,7 +129,15 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
     } catch (e) {
       // Handle error checking box emptiness
       debugPrint('Error checking if box is empty: $e');
-      // logger.e('Error checking if box is empty: $e');
+      return false; // Return true assuming it's empty on error
+    }
+  }
+
+  Future<bool> isBudgetAvailable(String key) async {
+    try {
+      return _budgetsBox.containsKey(key);
+    } catch (e) {
+      debugPrint('Error isBudgetAvailable: $e');
       return false; // Return true assuming it's empty on error
     }
   }

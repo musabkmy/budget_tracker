@@ -1,4 +1,5 @@
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
+import 'package:budget_tracker/core/resources/data_state.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_service.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
 import 'package:flutter/material.dart';
@@ -6,27 +7,21 @@ import 'package:flutter/material.dart';
 class BudgetDataBaseProvider {
   // Local Source For Home
   final BudgetDataBaseService _budgetDataBaseService;
-
-  //TODO: Reformate
-  Map<String, String> somethingWentWrong = {'en': 'Something went wrong'};
-  Map<String, String> budgetNotFound = {'en': 'Budget not found'};
-  Map<String, String> couldNotCreateBudget = {
-    'en': 'Could not create the Budget'
-  };
+  final exceptionItemType = ExceptionItemType.budget;
 
   BudgetDataBaseProvider({
     required BudgetDataBaseService budgetDataBaseService,
   }) : _budgetDataBaseService = budgetDataBaseService;
 
-  Future<List<Budget>> getAllBudgets() async {
-    try {
-      Iterable<Budget> iterable = await _budgetDataBaseService.getAll();
-      return iterable.toList();
-    } catch (e) {
-      debugPrint(e.toString());
-      throw DatabaseException(somethingWentWrong);
-    }
-  }
+  // Future<List<Budget>> getAllBudgets() async {
+  //   try {
+  //     Iterable<Budget> iterable = await _budgetDataBaseService.getAll();
+  //     return iterable.toList();
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //     throw DatabaseException();
+  //   }
+  // }
 
   Future<void> removeAll() async {
     try {
@@ -39,25 +34,40 @@ class BudgetDataBaseProvider {
     }
   }
 
-  Future<Budget?> getBudget(String id) async {
+  Future<Budget> getBudget({required String key}) async {
     try {
-      return await _budgetDataBaseService.getItem(key: id);
+      final budget = await _budgetDataBaseService.getItem(key: key);
+      if (budget != null) {
+        return budget;
+      } else {
+        throw DatabaseException;
+      }
     } catch (e) {
-      e is ItemNotFoundException
-          ? throw ItemNotFoundException(budgetNotFound)
-          : debugPrint(e.toString());
+      debugPrint('in provider: ${e.toString()}');
+      rethrow;
     }
-    return null;
   }
 
-  Future<void> insertBudget({required Budget newBudget}) async {
+  Future<bool> insertBudget(
+      {required String key, required Budget newBudget}) async {
     try {
-      await _budgetDataBaseService.insertItem(
+      return await _budgetDataBaseService.insertItem(
           key: newBudget.id, item: newBudget);
     } catch (e) {
-      e == 'InsertFailureException'
-          ? throw InsertFailureException(couldNotCreateBudget)
-          : debugPrint(e.toString());
+      debugPrint('Error in insertBudget: ${e.toString()}');
+      throw e.runtimeType;
+    }
+  }
+
+  ///Return [DataSuccess] with [Budget.id] when succeed
+  ///Return [DataFailed] with [errorKey] when failed, call [getLocalizedMessage] to get Error Message
+  Future<bool> updateBudget(
+      {required String key, required Budget newBudget}) async {
+    try {
+      return await _budgetDataBaseService.updateItem(key: key, item: newBudget);
+    } catch (e) {
+      debugPrint('Error in updateBudget: ${e.toString()}');
+      throw e.runtimeType;
     }
   }
 

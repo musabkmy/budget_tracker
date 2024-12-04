@@ -11,9 +11,9 @@ part 'budget_breakdown.g.dart';
 class BudgetBreakdown extends HiveObject {
   @HiveField(BudgetBreakdownFields.localizedNames)
   Map<String, String> localizedNames;
-  @HiveField(BudgetBreakdownFields.plannedBalance)
+  @HiveField(BudgetBreakdownFields.plannedBalance, defaultValue: 0)
   double plannedBalance;
-  @HiveField(BudgetBreakdownFields.currentBalance)
+  @HiveField(BudgetBreakdownFields.currentBalance, defaultValue: 0)
   double currentBalance;
 
   BudgetBreakdown({

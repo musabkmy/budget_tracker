@@ -18,8 +18,8 @@ class BudgetBreakdownAdapter extends TypeAdapter<BudgetBreakdown> {
     };
     return BudgetBreakdown(
       localizedNames: (fields[0] as Map).cast<String, String>(),
-      plannedBalance: fields[1] as double,
-      currentBalance: fields[2] as double,
+      plannedBalance: fields[1] == null ? 0 : fields[1] as double,
+      currentBalance: fields[2] == null ? 0 : fields[2] as double,
     );
   }
 

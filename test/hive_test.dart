@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:budget_tracker/config/dependency_injection/di.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_provider.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
@@ -26,11 +25,11 @@ void main() async {
     debugPrint(myBudget2.id);
     // await budgetDataBaseProvider.insertBudget(newBudget: myBudget);
     // await budgetDataBaseProvider.removeAll();
-    List<Budget>? allResult = await budgetDataBaseProvider.getAllBudgets();
+    // List<Budget>? allResult = await budgetDataBaseProvider.getAllBudgets();
     // Budget? result = await budgetDataBaseProvider
     //     .getBudget('fe4db581-a2bc-4a22-8bdd-e8c411fb5691');
 
-    debugPrint('All Result ${allResult.length}');
+    // debugPrint('All Result ${allResult.length}');
     // debugPrint('is Equaled: ${myBudget.id == result!.id}');
     // result == null
     //     ? debugPrint('item is null')

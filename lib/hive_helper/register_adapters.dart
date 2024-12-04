@@ -14,6 +14,7 @@ import 'package:budget_tracker/core/models/styled_text.dart';
 import 'package:budget_tracker/core/models/styled_text_key.dart';
 import 'package:budget_tracker/core/models/item_theme.dart';
 import 'package:budget_tracker/core/models/category_models/head_category.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category.dart';
@@ -22,6 +23,7 @@ import 'package:budget_tracker/features/budget/data/models/budget_models/budget_
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
 
 void registerAdapters() {
+  debugPrint('registerAdapters');
   Hive.registerAdapter(ItemThemeAdapter());
   Hive.registerAdapter(StyledTextKeyAdapter());
   Hive.registerAdapter(StyledTextAdapter());

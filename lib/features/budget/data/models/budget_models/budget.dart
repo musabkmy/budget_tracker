@@ -1,7 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown_type.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category.dart';
@@ -45,7 +46,8 @@ class Budget extends HiveObject {
   ///Date number,transactions ids in the day
   @HiveField(BudgetFields.allTransactionsInDayNumber)
   final Map<int, List<int>> allTransactionsInDayNumber;
-  int numberOfTransactions = 0;
+  @HiveField(BudgetFields.numberOfTransactions)
+  int numberOfTransactions;
 
   ///all type of [BudgetBreakdown] according to [BudgetBreakdownType]
   ///must be notified to related [BudgetCategory] - [balance] and [plannedBalance]
@@ -67,12 +69,13 @@ class Budget extends HiveObject {
     this.totalCurrentBalance = 0,
   })  : endDate = startDate.add(Duration(days: budgetPeriod.periodInDays - 1)),
         allTransactionsInDayNumber = {
-          for (int day = 0; day < budgetPeriod.periodInDays; day++) day: [],
-        }; //pre defined
+          for (int day = 0; day < budgetPeriod.periodInDays; day++) day: []
+        },
+        numberOfTransactions = 0; //pre defined
 
   @override
   String toString() {
-    return 'Budget(id: $id, localizedNames: $localizedNames, budgetPeriod: $budgetPeriod, headCategories: $headCategories, categories: $categories, totalPlannedExpenses: $totalPlannedExpenses, totalCurrentBalance: $totalCurrentBalance, startDate: $startDate, endDate: $endDate, allTransactionsInDayNumber: $allTransactionsInDayNumber, numberOfTransactions: $numberOfTransactions,\n allBudgetBreakdown: $allBudgetBreakdown)';
+    return 'Budget(id: $id, localizedNames: $localizedNames, budgetPeriod: $budgetPeriod, headCategories: $headCategories, categories: $categories, totalPlannedExpenses: $totalPlannedExpenses, totalCurrentBalance: $totalCurrentBalance, startDate: $startDate, endDate: $endDate, allTransactionsInDayNumber: $allTransactionsInDayNumber, numberOfTransactions: $numberOfTransactions, allBudgetBreakdown: $allBudgetBreakdown)';
   }
 
   @override

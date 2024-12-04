@@ -27,13 +27,13 @@ class BudgetAdapter extends TypeAdapter<Budget> {
           (fields[10] as Map).cast<BudgetBreakdownType, BudgetBreakdown>(),
       totalPlannedExpenses: fields[5] as int,
       totalCurrentBalance: fields[6] as int,
-    );
+    )..numberOfTransactions = fields[11] as int;
   }
 
   @override
   void write(BinaryWriter writer, Budget obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -54,6 +54,8 @@ class BudgetAdapter extends TypeAdapter<Budget> {
       ..write(obj.endDate)
       ..writeByte(9)
       ..write(obj.allTransactionsInDayNumber)
+      ..writeByte(11)
+      ..write(obj.numberOfTransactions)
       ..writeByte(10)
       ..write(obj.allBudgetBreakdown);
   }
