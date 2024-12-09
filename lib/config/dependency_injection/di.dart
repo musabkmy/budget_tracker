@@ -1,9 +1,5 @@
 import 'dart:io';
 
-import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
-import 'package:budget_tracker/features/budget/repository/budget_repository.dart';
-import 'package:budget_tracker/hive_helper/register_adapters.dart';
-
 import 'di_ex.dart';
 
 GetIt di = GetIt.instance;
@@ -15,7 +11,7 @@ Future<void> setupDi() async {
   /// Hive DataBase
   await Hive.initFlutter();
 
-  // registerAdapters();
+  registerAdapters();
 
   /// DB Services
   // Budget DataBase Service
@@ -37,10 +33,13 @@ Future<void> setupDi() async {
     di<BudgetDataBaseProvider>(),
   ));
 
-  // /// Blocs
+  /// Blocs
   // Budget
   di.registerSingleton<CreateBudgetBloc>(
       CreateBudgetBloc(di<BudgetRepository>()));
+
+  /// Providers
+  di.registerLazySingleton<AppearanceProvider>(() => AppearanceProvider());
 }
 
 Future<Directory> testSetupDi() async {

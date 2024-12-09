@@ -15,22 +15,29 @@ class AppTextStyles {
     return ScreenUtil().screenWidth > 600 ? base * 0.8 : base;
   }
 
-  TextStyle get headline => GoogleFonts.roboto(
+  TextStyle get headline => GoogleFonts.poppins(
         // fontFamily: 'Georgia',
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
         height: 1.2,
-        fontSize: adjustFont(42.0.sp),
+        fontSize: adjustFont(38.0.sp),
       );
 
-  TextStyle get subHeadline => GoogleFonts.roboto(
+  TextStyle get subHeadline => GoogleFonts.poppins(
         fontWeight: FontWeight.normal,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
         height: 1.4,
-        fontSize: adjustFont(18.0.sp),
+        fontSize: adjustFont(16.0.sp),
       );
 
-  TextStyle get title => GoogleFonts.roboto(
+  TextStyle get headline2 => GoogleFonts.poppins(
+        fontWeight: FontWeight.bold,
+        color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
+        height: 1.2,
+        fontSize: adjustFont(28.0.sp),
+      );
+
+  TextStyle get title => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
@@ -38,7 +45,7 @@ class AppTextStyles {
         fontSize: adjustFont(16.0.sp),
       );
 
-  TextStyle get subTitle => GoogleFonts.roboto(
+  TextStyle get subTitle => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
@@ -46,49 +53,66 @@ class AppTextStyles {
         fontSize: adjustFont(16.0.sp),
       );
 
-  TextStyle get bodyBold => GoogleFonts.roboto(
+  TextStyle get bodyBold => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textBodyColor, context),
         fontSize: 14.0.sp,
       );
 
-  TextStyle get bodyNormal => GoogleFonts.roboto(
+  TextStyle get bodyNormal => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 14.0.sp,
       );
 
-  TextStyle get captionBold => GoogleFonts.roboto(
+  TextStyle get captionBold => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 12.0.sp,
       );
 
-  TextStyle get captionNormal => GoogleFonts.roboto(
+  TextStyle get captionNormal => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 12.0.sp,
       );
 
-  TextStyle get action1 => GoogleFonts.roboto(
+  TextStyle get action1 => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.2,
         color: CupertinoDynamicColor.resolve(
             appColors.primaryContrastingColor, context),
-        fontSize: 18.0.sp,
+        fontSize: 14.0.sp,
       );
 
-  TextStyle get action2 => GoogleFonts.roboto(
+  TextStyle get action2 => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.2,
         color: CupertinoDynamicColor.resolve(
             appColors.textSecondaryActionColor, context),
-        fontSize: 16.0.sp,
+        fontSize: 14.0.sp,
+      );
+
+  TextStyle get fieldTitle => GoogleFonts.poppins(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.2,
+        color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
+        fontSize: 12.0.sp,
+      );
+
+  TextStyle get fieldText => GoogleFonts.poppins(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.5,
+        color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
+        height: 1.4,
+        fontSize: adjustFont(14.0.sp),
       );
 }

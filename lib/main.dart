@@ -1,6 +1,6 @@
-import 'package:budget_tracker/core/utils/localization_service.dart';
+import 'package:bloc/bloc.dart';
+import 'package:budget_tracker/core/settings/app_block_observer.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app.dart';
@@ -22,6 +22,9 @@ void main() async {
   // Load the user's preferred theme while the splash screen is displayed.
   // This prevents a sudden theme change when the app is first displayed.
   await settingsController.loadSettings();
+
+  //Listen to all blocs changes
+  Bloc.observer = const AppBlocObserver();
 
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the

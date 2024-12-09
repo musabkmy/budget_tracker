@@ -1,10 +1,15 @@
+import 'package:budget_tracker/config/dependency_injection/di.dart';
 import 'package:budget_tracker/config/theme/app_theme.dart';
+import 'package:budget_tracker/core/providers/appearance_provider.dart';
+import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/page/budget_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 // import 'core/settings/settings_controller.dart';
 
 /// The Widget that configures your application.
@@ -27,20 +32,30 @@ class MyApp extends StatelessWidget {
     // listenable: settingsController,
     // builder: (BuildContext context, Widget? child) {
     // return
-    return ScreenUtilInit(
-      // designSize: const Size(360, 690),
-      designSize: const Size(375, 812),
-      ensureScreenSize: true,
-      enableScaleWH: () => true,
-      minTextAdapt: true,
-      enableScaleText: () => false,
-      child: CupertinoApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        // title: AppLocalizations.of(context)!.appTitle,
-        debugShowCheckedModeBanner: false,
-        theme: appDarkTheme,
-        home: BudgetPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CreateBudgetBloc>(create: (_) => di<CreateBudgetBloc>()),
+      ],
+      child: ChangeNotifierProvider<AppearanceProvider>(
+        create: (_) => di<AppearanceProvider>(),
+        child: ScreenUtilInit(
+          // designSize: const Size(360, 690),
+          designSize: const Size(375, 812),
+          ensureScreenSize: true,
+          enableScaleWH: () => true,
+          minTextAdapt: true,
+          enableScaleText: () => false,
+          child: CupertinoApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            onGenerateTitle: (context) =>
+                AppLocalizations.of(context)!.appTitle,
+            // title: AppLocalizations.of(context)!.appTitle,
+            debugShowCheckedModeBanner: false,
+            theme: appDarkTheme,
+            home: BudgetPage(),
+          ),
+        ),
       ),
     );
     // },

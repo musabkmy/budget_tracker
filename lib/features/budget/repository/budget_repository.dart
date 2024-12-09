@@ -1,6 +1,3 @@
-// // ignore_for_file: public_member_api_docs, sort_constructors_first
-// import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_provider.dart';
-
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
 import 'package:budget_tracker/core/resources/data_state.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_provider.dart';
@@ -13,16 +10,6 @@ class BudgetRepository {
   BudgetRepository(
     this._budgetDataBaseProvider,
   );
-  Future<DataState<Budget>> getBudget({required String key}) async {
-    try {
-      final budget = await _budgetDataBaseProvider.getBudget(key: key);
-      return DataSuccess(budget);
-    } catch (e) {
-      debugPrint(e.toString());
-      debugPrint('not found in repository');
-      return DataFailed(e.toString(), _exceptionItemType);
-    }
-  }
 
   Future<DataState<String>> insertBudget({required Budget newBudget}) async {
     try {
@@ -35,6 +22,17 @@ class BudgetRepository {
       return DataFailed('err', _exceptionItemType);
     } catch (e) {
       debugPrint('Error in insertBudget: ${e.toString()}');
+      return DataFailed(e.toString(), _exceptionItemType);
+    }
+  }
+
+  Future<DataState<Budget>> getBudget({required String key}) async {
+    try {
+      final budget = await _budgetDataBaseProvider.getBudget(key: key);
+      return DataSuccess(budget);
+    } catch (e) {
+      debugPrint(e.toString());
+      debugPrint('not found in repository');
       return DataFailed(e.toString(), _exceptionItemType);
     }
   }

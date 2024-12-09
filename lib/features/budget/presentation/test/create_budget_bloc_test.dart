@@ -33,7 +33,7 @@ void main() {
           emitsThrough(predicate((state) => (state as CreateBudgetState)
               .createBudgetStatus is CreateBudgetStatusModifiable)),
         );
-        createBudgetBloc.add(ModifyCreatedBudget(_getDefaultBudget()));
+        createBudgetBloc.add(ModifyCreatedBudget());
         await expectLater(
           createBudgetBloc.stream,
           emitsThrough(predicate((state) => (state as CreateBudgetState)
@@ -96,7 +96,7 @@ Budget _getDefaultBudget() {
   return Budget(
       //must check can't create when its already used id
       id: const Uuid().v4(),
-      localizedNames: defaultBudgetName,
+      name: defaultBudgetName,
       budgetPeriod: defaultBudgetPeriod,
       headCategories: budgetHeadCategories,
       categories: budgetCategories,

@@ -241,7 +241,7 @@ String enLan = 'en';
 
 //////////////
 
-Map<String, String> defaultBudgetName = {'en': 'My Workspace'};
+String defaultBudgetName = 'My Workspace';
 BudgetPeriod defaultBudgetPeriod = BudgetPeriod.week;
 
 Map<BudgetBreakdownType, BudgetBreakdown> defaultBudgetBreakdown = {
@@ -396,7 +396,7 @@ const uuid = Uuid();
 
 Budget myBudget = Budget(
   id: uuid.v4(),
-  localizedNames: defaultBudgetName,
+  name: defaultBudgetName,
   budgetPeriod: BudgetPeriod.biMonth,
   // budgetPeriod: defaultBudgetPeriod,
   headCategories: headCategories,
@@ -407,7 +407,7 @@ Budget myBudget = Budget(
 
 Budget myBudget2 = Budget(
   id: uuid.v4(),
-  localizedNames: defaultBudgetName,
+  name: defaultBudgetName,
   budgetPeriod: BudgetPeriod.biMonth,
   // budgetPeriod: defaultBudgetPeriod,
   headCategories: headCategories,

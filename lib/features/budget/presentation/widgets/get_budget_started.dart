@@ -1,7 +1,10 @@
 import 'package:budget_tracker/core/extensions/build_context.dart';
-import 'package:budget_tracker/core/helper/shared.dart';
+import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
+import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
+import 'package:budget_tracker/features/budget/presentation/page/create_budget_setup.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GetBudgetStarted extends StatelessWidget {
@@ -27,15 +30,17 @@ class BuildActions extends StatelessWidget {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Expanded(
         child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: spPadding24),
+      padding: EdgeInsets.symmetric(horizontal: aSpPadding24),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           AppFilledCupertinoButton(
               text: appLocalizations.getStarted,
+              withBottomPadding: false,
               onPressed: () {
+                context.read<CreateBudgetBloc>().add(CreateDefaultBudget());
                 showCustomCupertinoBottomSheet(context);
               }),
-          SizedBox(height: padding12),
           AppSecondaryCupertinoButton(
               text: appLocalizations.skipSetup, onPressed: () {}),
         ],
@@ -46,33 +51,10 @@ class BuildActions extends StatelessWidget {
   void showCustomCupertinoBottomSheet(BuildContext context) {
     showCupertinoModalPopup(
       context: context,
+      useRootNavigator: false,
+      // barrierDismissible: false,
       builder: (BuildContext context) {
-        return Container(
-          height: 300,
-          decoration: BoxDecoration(
-            color: CupertinoColors.systemGrey6,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 20),
-              Text(
-                'Custom Bottom Sheet',
-                style: CupertinoTheme.of(context).textTheme.navTitleTextStyle,
-              ),
-              Spacer(),
-              CupertinoButton(
-                child: Text('Close'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
+        return CreateBudgetSetup();
       },
     );
   }
@@ -87,7 +69,7 @@ class BuildSetupLayout extends StatelessWidget {
     return Expanded(
         flex: 3,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: spPadding32),
+          padding: EdgeInsets.symmetric(horizontal: aSpPadding32),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

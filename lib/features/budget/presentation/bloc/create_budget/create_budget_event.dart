@@ -12,10 +12,24 @@ class CreateDefaultBudget extends CreateBudgetEvent {
   const CreateDefaultBudget();
 }
 
-class ModifyCreatedBudget extends CreateBudgetEvent {
-  final Budget updatedBudget;
-  const ModifyCreatedBudget(this.updatedBudget);
+class ToPreviousSetupLayout extends CreateBudgetEvent {
+  const ToPreviousSetupLayout();
+}
 
-  @override
-  List<Object> get props => [updatedBudget];
+class ChangeBudgetNameAndPeriod extends CreateBudgetEvent {
+  final String name;
+  final BudgetPeriod budgetPeriod;
+  const ChangeBudgetNameAndPeriod(
+      {required this.name, required this.budgetPeriod});
+}
+
+class AddBudgetCategories extends CreateBudgetEvent {
+  final String headCategoryId;
+  final Iterable<BudgetCategory> categories;
+  const AddBudgetCategories(
+      {required this.headCategoryId, required this.categories});
+}
+
+class ModifyCreatedBudget extends CreateBudgetEvent {
+  const ModifyCreatedBudget();
 }

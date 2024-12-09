@@ -26,8 +26,12 @@ class AppColors {
   final CupertinoDynamicColor barBackgroundColor =
       CupertinoDynamicColor.withBrightness(
     color: Color(0xFFF8F8F8), // Light mode
-    darkColor: Color(0xFF363B3F), // Dark mode
+    darkColor: Color(0xFF282E31), // Dark mode
   );
+
+  final CupertinoDynamicColor helper1Color =
+      CupertinoDynamicColor.withBrightness(
+          color: Color(0xFF3C3C3C), darkColor: Color(0xFFCCCECE));
 
   CupertinoDynamicColor get textTitleColor =>
       CupertinoDynamicColor.withBrightness(

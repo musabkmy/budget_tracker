@@ -67,6 +67,14 @@
   "overIncomeText":"over income",
   "@overIncomeText": {},
   "totalPlannedExpenses":"Total planned expenses",
-  "@totalPlannedExpenses": {}
+  "@totalPlannedExpenses": {},
+  "continueLabel":"Continue",
+  "@continueLabel": {},
+  "nameLabel":"Name",
+  "@nameLabel": {},
+  "budgetPeriodLabel":"Budget period",
+  "@budgetPeriodLabel": {},
+  "amountLabel":"Amount",
+  "@amountLabel": {}
 
 }

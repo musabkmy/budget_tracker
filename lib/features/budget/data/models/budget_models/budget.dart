@@ -21,8 +21,8 @@ part 'budget.g.dart';
 class Budget extends HiveObject {
   @HiveField(BudgetFields.id)
   final String id;
-  @HiveField(BudgetFields.localizedNames)
-  final Map<String, String> localizedNames;
+  @HiveField(BudgetFields.name)
+  final String name;
   @HiveField(BudgetFields.budgetPeriod)
   final BudgetPeriod budgetPeriod;
 
@@ -41,13 +41,13 @@ class Budget extends HiveObject {
   @HiveField(BudgetFields.startDate)
   final DateTime startDate;
   @HiveField(BudgetFields.endDate)
-  final DateTime endDate;
+  DateTime? endDate;
 
   ///Date number,transactions ids in the day
   @HiveField(BudgetFields.allTransactionsInDayNumber)
-  final Map<int, List<int>> allTransactionsInDayNumber;
+  Map<int, List<int>>? allTransactionsInDayNumber;
   @HiveField(BudgetFields.numberOfTransactions)
-  int numberOfTransactions;
+  int? numberOfTransactions;
 
   ///all type of [BudgetBreakdown] according to [BudgetBreakdownType]
   ///must be notified to related [BudgetCategory] - [balance] and [plannedBalance]
@@ -59,7 +59,7 @@ class Budget extends HiveObject {
 
   Budget({
     required this.id,
-    required this.localizedNames,
+    required this.name,
     required this.budgetPeriod,
     required this.headCategories,
     required this.categories,
@@ -67,15 +67,18 @@ class Budget extends HiveObject {
     required this.allBudgetBreakdown,
     this.totalPlannedExpenses = 0,
     this.totalCurrentBalance = 0,
-  })  : endDate = startDate.add(Duration(days: budgetPeriod.periodInDays - 1)),
-        allTransactionsInDayNumber = {
-          for (int day = 0; day < budgetPeriod.periodInDays; day++) day: []
-        },
-        numberOfTransactions = 0; //pre defined
+  });
+  //TODO: ensure modifying endDate, allTransactionsInDayNumber and numberOfTransactions
+
+  // endDate = startDate.add(Duration(days: budgetPeriod.periodInDays - 1)),
+  // allTransactionsInDayNumber = {
+  //   for (int day = 0; day < budgetPeriod.periodInDays; day++) day: []
+  // },
+  // numberOfTransactions = 0; //pre defined
 
   @override
   String toString() {
-    return 'Budget(id: $id, localizedNames: $localizedNames, budgetPeriod: $budgetPeriod, headCategories: $headCategories, categories: $categories, totalPlannedExpenses: $totalPlannedExpenses, totalCurrentBalance: $totalCurrentBalance, startDate: $startDate, endDate: $endDate, allTransactionsInDayNumber: $allTransactionsInDayNumber, numberOfTransactions: $numberOfTransactions, allBudgetBreakdown: $allBudgetBreakdown)';
+    return 'Budget(id: $id, name: $name, budgetPeriod: $budgetPeriod, headCategories: $headCategories, categories: $categories, totalPlannedExpenses: $totalPlannedExpenses, totalCurrentBalance: $totalCurrentBalance, startDate: $startDate, endDate: $endDate, allTransactionsInDayNumber: $allTransactionsInDayNumber, numberOfTransactions: $numberOfTransactions, allBudgetBreakdown: $allBudgetBreakdown)';
   }
 
   @override
@@ -83,7 +86,7 @@ class Budget extends HiveObject {
     if (identical(this, other)) return true;
 
     return other.id == id &&
-        mapEquals(other.localizedNames, localizedNames) &&
+        other.name == name &&
         other.budgetPeriod == budgetPeriod &&
         mapEquals(other.headCategories, headCategories) &&
         mapEquals(other.categories, categories) &&
@@ -100,7 +103,7 @@ class Budget extends HiveObject {
   @override
   int get hashCode {
     return id.hashCode ^
-        localizedNames.hashCode ^
+        name.hashCode ^
         budgetPeriod.hashCode ^
         headCategories.hashCode ^
         categories.hashCode ^
@@ -112,11 +115,54 @@ class Budget extends HiveObject {
         numberOfTransactions.hashCode ^
         allBudgetBreakdown.hashCode;
   }
+
+  Budget copyWith({
+    String? name,
+    BudgetPeriod? budgetPeriod,
+    Map<String, BudgetHeadCategory>? headCategories,
+    Map<String, BudgetCategory>? categories,
+    int? totalPlannedExpenses,
+    int? totalCurrentBalance,
+    DateTime? startDate,
+    DateTime? endDate,
+    Map<int, List<int>>? allTransactionsInDayNumber,
+    int? numberOfTransactions,
+    Map<BudgetBreakdownType, BudgetBreakdown>? allBudgetBreakdown,
+  }) {
+    return Budget(
+      id: id,
+      name: name ?? this.name,
+      budgetPeriod: budgetPeriod ?? this.budgetPeriod,
+      headCategories: headCategories ?? this.headCategories,
+      categories: categories ?? this.categories,
+      totalPlannedExpenses: totalPlannedExpenses ?? this.totalPlannedExpenses,
+      totalCurrentBalance: totalCurrentBalance ?? this.totalCurrentBalance,
+      startDate: startDate ?? this.startDate,
+      allBudgetBreakdown: allBudgetBreakdown ?? this.allBudgetBreakdown,
+    );
+  }
 }
 
 extension BudgetExt on Budget {
   // String getIncomeStatus;
+  int get headCategoriesLength => headCategories.length;
   String get startDateIso => startDate.toIso8601String();
-  String get endDateIso => endDate.toIso8601String();
-  int get daysLeft => endDate.difference(startDate).inDays;
+  String get endDateIso => endDate!.toIso8601String();
+  int get daysLeft => endDate!.difference(startDate).inDays;
+
+  ///get all head category available categories
+  List<String> getCategoriesId(String headCategoryId) =>
+      headCategories.containsKey(headCategoryId)
+          ? headCategories[headCategoryId]!.categoriesId
+          : [];
+  // categories.entries
+  //     .where((entry) => entry.value.headCategoryId == headCategoryId)
+  //     .map((entry) => entry.key)
+  //     .toList();
+
+  ///get planned balance
+  double getCategoryPlannedBalance(String categoryId) =>
+      categories.containsKey(categoryId)
+          ? categories[categoryId]!.plannedBalance
+          : 0;
 }

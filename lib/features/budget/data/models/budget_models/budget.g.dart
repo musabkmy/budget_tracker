@@ -18,7 +18,7 @@ class BudgetAdapter extends TypeAdapter<Budget> {
     };
     return Budget(
       id: fields[0] as String,
-      localizedNames: (fields[1] as Map).cast<String, String>(),
+      name: fields[1] as String,
       budgetPeriod: fields[2] as BudgetPeriod,
       headCategories: (fields[3] as Map).cast<String, BudgetHeadCategory>(),
       categories: (fields[4] as Map).cast<String, BudgetCategory>(),
@@ -27,7 +27,11 @@ class BudgetAdapter extends TypeAdapter<Budget> {
           (fields[10] as Map).cast<BudgetBreakdownType, BudgetBreakdown>(),
       totalPlannedExpenses: fields[5] as int,
       totalCurrentBalance: fields[6] as int,
-    )..numberOfTransactions = fields[11] as int;
+    )
+      ..endDate = fields[8] as DateTime?
+      ..allTransactionsInDayNumber = (fields[9] as Map?)?.map(
+          (dynamic k, dynamic v) => MapEntry(k as int, (v as List).cast<int>()))
+      ..numberOfTransactions = fields[11] as int?;
   }
 
   @override
@@ -37,7 +41,7 @@ class BudgetAdapter extends TypeAdapter<Budget> {
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.localizedNames)
+      ..write(obj.name)
       ..writeByte(2)
       ..write(obj.budgetPeriod)
       ..writeByte(3)

@@ -3,12 +3,14 @@ import 'package:flutter/cupertino.dart';
 
 CupertinoThemeData get appTheme => appDarkTheme;
 
-final appColors = AppColors();
 CupertinoThemeData appDarkTheme = CupertinoThemeData(
   brightness: Brightness.dark,
-  applyThemeToAll: true,
-  primaryColor: appColors.primaryColor,
-  scaffoldBackgroundColor: appColors.scaffoldBackgroundColor,
-  primaryContrastingColor: appColors.primaryContrastingColor,
-  barBackgroundColor: appColors.barBackgroundColor,
+  primaryColor: AppColors().primaryColor,
+  scaffoldBackgroundColor: AppColors().scaffoldBackgroundColor,
+  primaryContrastingColor: AppColors().primaryContrastingColor,
+  barBackgroundColor: AppColors().barBackgroundColor,
 );
+
+extension CupertinoThemeDataExt on CupertinoThemeData {
+  CupertinoDynamicColor get helper1Color => AppColors().helper1Color;
+}

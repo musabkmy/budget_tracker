@@ -10,7 +10,7 @@ import 'package:budget_tracker/features/budget/data/models/budget_models/budget_
 
 const String enLan = 'en';
 
-Map<String, String> defaultBudgetName = {enLan: 'My Workspace'};
+String defaultBudgetName = 'My Workspace';
 
 BudgetPeriod defaultBudgetPeriod = BudgetPeriod.week;
 
@@ -63,7 +63,7 @@ List<BudgetCategory> defaultBudgetCategory = [
       localizedNames: {enLan: 'Income'},
       theme: ItemTheme(
         icon: ItemThemeIcons.income,
-        color: ItemThemeColors.lightGrey,
+        color: ItemThemeColors.limeGreen,
       ),
       expenseType: ExpenseType.fixed,
       budgetCategoryType: BudgetCategoryType.income),
@@ -74,7 +74,7 @@ List<BudgetCategory> defaultBudgetCategory = [
       localizedNames: {enLan: 'Rent'},
       theme: ItemTheme(
         icon: ItemThemeIcons.rent,
-        color: ItemThemeColors.skyBlue,
+        color: ItemThemeColors.goldenYellow,
       ),
       expenseType: ExpenseType.fixed,
       budgetCategoryType: BudgetCategoryType.expense),
@@ -84,7 +84,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     localizedNames: {enLan: 'Internet'},
     theme: ItemTheme(
       icon: ItemThemeIcons.internet,
-      color: ItemThemeColors.skyBlue,
+      color: ItemThemeColors.goldenYellow,
     ),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
@@ -95,7 +95,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     localizedNames: {enLan: 'Telephone'},
     theme: ItemTheme(
       icon: ItemThemeIcons.telephone,
-      color: ItemThemeColors.skyBlue,
+      color: ItemThemeColors.goldenYellow,
     ),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.fixed,
@@ -107,7 +107,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     localizedNames: {enLan: 'Restaurants'},
     theme: ItemTheme(
       icon: ItemThemeIcons.restaurant,
-      color: ItemThemeColors.softRed,
+      color: ItemThemeColors.skyBlue,
     ),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
@@ -118,7 +118,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     localizedNames: {enLan: 'Groceries'},
     theme: ItemTheme(
       icon: ItemThemeIcons.groceries,
-      color: ItemThemeColors.softRed,
+      color: ItemThemeColors.skyBlue,
     ),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
@@ -129,7 +129,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     headCategoryId: defaultBudgetHeadCategory[3].id,
     localizedNames: {enLan: 'Clothes'},
     theme: ItemTheme(
-        icon: ItemThemeIcons.clothes, color: ItemThemeColors.goldenYellow),
+        icon: ItemThemeIcons.clothes, color: ItemThemeColors.lightGrey),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
   ),
@@ -138,7 +138,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     headCategoryId: defaultBudgetHeadCategory[3].id,
     localizedNames: {enLan: 'Healthcare'},
     theme: ItemTheme(
-        icon: ItemThemeIcons.healthcare, color: ItemThemeColors.goldenYellow),
+        icon: ItemThemeIcons.healthcare, color: ItemThemeColors.lightGrey),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
   ),
@@ -146,8 +146,8 @@ List<BudgetCategory> defaultBudgetCategory = [
     id: '8',
     headCategoryId: defaultBudgetHeadCategory[3].id,
     localizedNames: {enLan: 'Gym'},
-    theme: ItemTheme(
-        icon: ItemThemeIcons.gym, color: ItemThemeColors.goldenYellow),
+    theme:
+        ItemTheme(icon: ItemThemeIcons.gym, color: ItemThemeColors.lightPink),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
   ),
@@ -156,8 +156,7 @@ List<BudgetCategory> defaultBudgetCategory = [
     headCategoryId: defaultBudgetHeadCategory[3].id,
     localizedNames: {enLan: 'Miscellaneous'},
     theme: ItemTheme(
-        icon: ItemThemeIcons.miscellaneous,
-        color: ItemThemeColors.violetPurple),
+        icon: ItemThemeIcons.miscellaneous, color: ItemThemeColors.lightGrey),
     budgetCategoryType: BudgetCategoryType.expense,
     expenseType: ExpenseType.variable,
   ),
@@ -166,8 +165,8 @@ List<BudgetCategory> defaultBudgetCategory = [
     id: '10',
     headCategoryId: defaultBudgetHeadCategory[4].id,
     localizedNames: {enLan: 'Saving'},
-    theme: ItemTheme(
-        icon: ItemThemeIcons.savings, color: ItemThemeColors.lightYellow),
+    theme:
+        ItemTheme(icon: ItemThemeIcons.savings, color: ItemThemeColors.skyBlue),
     budgetCategoryType: BudgetCategoryType.income,
     expenseType: ExpenseType.variable,
   ),
