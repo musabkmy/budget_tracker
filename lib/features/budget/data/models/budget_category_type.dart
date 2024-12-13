@@ -5,11 +5,12 @@ import 'package:hive/hive.dart';
 
 part 'budget_category_type.g.dart';
 
-///define what is the category relation to the budget
-///[income] and [expense]
 @HiveType(
     typeId: HiveTypes.budgetCategoryType,
     adapterName: HiveAdapters.budgetCategoryType)
+
+///define what is the category relation to the budget
+///[income] and [expense]
 enum BudgetCategoryType {
   @HiveField(BudgetCategoryTypeFields.income)
   income,

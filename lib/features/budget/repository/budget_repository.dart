@@ -1,7 +1,7 @@
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
 import 'package:budget_tracker/core/resources/data_state.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_provider.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:flutter/material.dart';
 
 class BudgetRepository {
@@ -37,6 +37,8 @@ class BudgetRepository {
     }
   }
 
+  ///Return [DataSuccess] with [Budget.id] when succeed
+  ///Return [DataFailed] with [errorKey] when failed, call [getLocalizedMessage] to get Error Message
   Future<DataState<String>> updateBudget(
       {required String key, required Budget updateBudget}) async {
     try {

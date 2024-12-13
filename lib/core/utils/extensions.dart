@@ -1,6 +1,11 @@
 import 'package:budget_tracker/core/models/styled_text.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_info.dart';
 
+extension DoubleExt on double {
+  num get priceFormat =>
+      this % 1 == 0 ? toInt() : double.parse(toStringAsFixed(2));
+}
+
 extension StringExt on String {
   bool hasTheSameName(String other) => this == other;
 }

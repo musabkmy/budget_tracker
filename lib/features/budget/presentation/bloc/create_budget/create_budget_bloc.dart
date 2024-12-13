@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:budget_tracker/core/init_data/default_budget_data.dart';
 import 'package:budget_tracker/core/resources/data_state.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_head_categories.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_period.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_category.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_head_categories.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_period.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_info.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
@@ -30,7 +30,9 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
     on<ModifyCreatedBudget>(_updateCreatedBudget);
     on<ChangeBudgetNameAndPeriod>(_changeBudgetNameAndPeriod);
     on<ToPreviousSetupLayout>(_toPreviousSetupLayout);
-    on<AddBudgetCategories>(_addBudgetCategories);
+    on<ModifyBudgetCategoryPlannedBalance>(_modifyBudgetCategoryPlannedBalance);
+    on<NextBudgetHeadCategory>(_nextBudgetHeadCategory);
+    on<FromStatsToNextHeadCategory>(_fromStatsToNextHeadCategory);
   }
 
   Future<void> _createNewBudget(
@@ -60,7 +62,7 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
     try {
       final DataState<Budget> result =
           await _budgetRepository.getBudget(key: budgetId);
-      if (result is DataSuccess && result.data != null) {
+      if (result is DataSuccess && result.data is Budget) {
         emit(state.copyWith(
             newCreateBudgetStatus: CreateBudgetStatusModifiable(result.data!)));
         debugPrint('added: ${result.data!.id}');
@@ -78,40 +80,63 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
 
   void _toPreviousSetupLayout(
       ToPreviousSetupLayout event, Emitter<CreateBudgetState> emit) {
-    if (state.currentSetupLayoutInfo.atHeadCategory) {
-      if (state.currentSetupLayoutInfo.inFirstHeadCategory) {
+    debugPrint(
+        'at _toPreviousSetupLayout: ${state.currentSetupLayoutInfo.toString()}');
+    final stateModifiable = state.createBudgetStatus;
+    if (stateModifiable is CreateBudgetStatusModifiable) {
+      if (state.currentSetupLayoutInfo.atHeadCategory) {
+        if (state.currentSetupLayoutInfo.inFirstHeadCategory) {
+          emit(state.copyWith(
+              currentSetupLayoutInfo: state.currentSetupLayoutInfo
+                  .copyWith(layoutType: LayoutType.start)));
+
+          debugPrint('at _toPreviousSetupLayout: inFirstHeadCategory');
+        } else {
+          emit(state.copyWith(
+              currentSetupLayoutInfo: state.currentSetupLayoutInfo.copyWith(
+            layoutType: LayoutType.headCategory,
+            nextHeadBudgetIndex: false,
+            initialBudgetCategoryPlannedBalance: stateModifiable.budget
+                .getHeadCategoryCategoriesInitPlannedBalance(
+                    state.currentSetupLayoutInfo.nexHeadCategoryIndex - 2),
+          )));
+          debugPrint(
+              'at _toPreviousSetupLayout: from hc: ${state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance}');
+        }
+      } else if (state.currentSetupLayoutInfo.atStats ||
+          state.currentSetupLayoutInfo.atFinish) {
+        //pass null nextHeadBudgetIndex to get last index
         emit(state.copyWith(
             currentSetupLayoutInfo: state.currentSetupLayoutInfo.copyWith(
-                layoutType: LayoutType.start, nextHeadBudgetIndex: null)));
-      } else {
-        emit(state.copyWith(
-            currentSetupLayoutInfo: state.currentSetupLayoutInfo.copyWith(
-                layoutType: LayoutType.headCategory,
-                nextHeadBudgetIndex: false)));
+          layoutType: LayoutType.headCategory,
+          initialBudgetCategoryPlannedBalance: stateModifiable.budget
+              .getHeadCategoryCategoriesInitPlannedBalance(
+                  state.currentSetupLayoutInfo.nexHeadCategoryIndex - 1),
+        )));
+        debugPrint(
+            'at _toPreviousSetupLayout: from stat/finish ${stateModifiable.budget.getHeadCategoryCategoriesInitPlannedBalance(state.currentSetupLayoutInfo.nexHeadCategoryIndex - 1)}');
       }
-    } else if (state.currentSetupLayoutInfo.atStats ||
-        state.currentSetupLayoutInfo.atFinish) {
-      //pass null nextHeadBudgetIndex to get last index
-      emit(state.copyWith(
-          currentSetupLayoutInfo: state.currentSetupLayoutInfo.copyWith(
-        layoutType: LayoutType.headCategory,
-      )));
     }
   }
 
   void _changeBudgetNameAndPeriod(
       ChangeBudgetNameAndPeriod event, Emitter<CreateBudgetState> emit) {
-    final modifiableState = state.createBudgetStatus;
-    if (modifiableState is CreateBudgetStatusModifiable) {
-      if ((event.name != modifiableState.budget.name) ||
-          (event.budgetPeriod != modifiableState.budget.budgetPeriod)) {
-        final newBudget = modifiableState.budget.copyWith(
+    final stateModifiable = state.createBudgetStatus;
+    if (stateModifiable is CreateBudgetStatusModifiable) {
+      if ((event.name != stateModifiable.budget.name) ||
+          (event.budgetPeriod != stateModifiable.budget.budgetPeriod)) {
+        final newBudget = stateModifiable.budget.copyWith(
           name: event.name,
           budgetPeriod: event.budgetPeriod,
         );
         //start modifying head categories
         final nextSetupLayout = state.currentSetupLayoutInfo.copyWith(
-            layoutType: LayoutType.headCategory, nextHeadBudgetIndex: true);
+          layoutType: LayoutType.headCategory,
+          nextHeadBudgetIndex: true,
+          initialBudgetCategoryPlannedBalance: stateModifiable.budget
+              .getHeadCategoryCategoriesInitPlannedBalance(
+                  state.currentSetupLayoutInfo.nexHeadCategoryIndex),
+        );
         emit(
           state.copyWith(
               newCreateBudgetStatus: CreateBudgetStatusModifiable(newBudget),
@@ -124,7 +149,12 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
       } else {
         //start modifying head categories
         final nextSetupLayout = state.currentSetupLayoutInfo.copyWith(
-            layoutType: LayoutType.headCategory, nextHeadBudgetIndex: true);
+          layoutType: LayoutType.headCategory,
+          nextHeadBudgetIndex: true,
+          initialBudgetCategoryPlannedBalance: stateModifiable.budget
+              .getHeadCategoryCategoriesInitPlannedBalance(
+                  state.currentSetupLayoutInfo.nexHeadCategoryIndex),
+        );
         emit(state.copyWith(currentSetupLayoutInfo: nextSetupLayout));
         debugPrint(
             'next page: ${state.currentSetupLayoutInfo.layoutType}\nheadBudgetIndex: ${state.currentSetupLayoutInfo.headBudgetIndex}');
@@ -132,15 +162,101 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
     }
   }
 
-  void _addBudgetCategories(
-      AddBudgetCategories event, Emitter<CreateBudgetState> emit) {
-    final modifiableState = state.createBudgetStatus;
-    if (modifiableState is CreateBudgetStatusModifiable &&
-        state.currentSetupLayoutInfo.atHeadCategory) {
-      //TODO: process of addding category, modifing other listenable instances
+  Future<void> _modifyBudgetCategoryPlannedBalance(
+      ModifyBudgetCategoryPlannedBalance event,
+      Emitter<CreateBudgetState> emit) async {
+    final stateModifiable = state.createBudgetStatus;
+    if (stateModifiable is CreateBudgetStatusModifiable &&
+        state.currentSetupLayoutInfo.atHeadCategory &&
+        stateModifiable.budget.categories[event.categoryId]!.plannedBalance !=
+            event.newPlannedBalance) {
+      debugPrint(
+          '--------\nstateModifiable.budget.categories[event.categoryId]!.plannedBalance ${stateModifiable.budget.categories[event.categoryId]!.plannedBalance}\nevent.newPlannedBalance: ${event.newPlannedBalance}');
+      try {
+        final getResult =
+            await _budgetRepository.getBudget(key: stateModifiable.budget.id);
+        if (getResult is DataSuccess && getResult.data is Budget) {
+          final updateBudget = getResult.data!;
+          if (updateBudget.headCategories.containsKey(event.headCategoryId) &&
+              updateBudget.categories.containsKey(event.categoryId)) {
+            final category = updateBudget.categories[event.categoryId]!;
+            final headCategory =
+                updateBudget.headCategories[event.headCategoryId]!;
 
+            updateBudget.categories[event.categoryId] = category.copyWithSameId(
+                plannedBalance: event.newPlannedBalance);
+
+            updateBudget.headCategories[event.headCategoryId] =
+                headCategory.copyWithSameId(
+                    totalPlannedBalance: updateBudget
+                        .getHeadCategoryTotalPlannedBalance(headCategory.id));
+
+            final updateResult = await _budgetRepository.updateBudget(
+                key: stateModifiable.budget.id, updateBudget: updateBudget);
+            if (updateResult is DataSuccess) {
+              debugPrint(
+                  'bloc, Update planned balance: ${updateBudget.toString()}');
+              emit(state.copyWith(
+                  newCreateBudgetStatus:
+                      CreateBudgetStatusModifiable(updateBudget)));
+            }
+          }
+        } else if (getResult is DataFailed) {
+          debugPrint(
+              'in _modifyBudgetCategoryPlannedBalance: ${getResult.errorKey.toString()}');
+        }
+      } catch (e) {
+        debugPrint(
+            '_modifyBudgetCategoryPlannedBalance error: ${e.toString()}');
+      }
+    }
+  }
+
+  void _nextBudgetHeadCategory(
+      NextBudgetHeadCategory event, Emitter<CreateBudgetState> emit) {
+    final stateModifiable = state.createBudgetStatus;
+    if (stateModifiable is CreateBudgetStatusModifiable &&
+        state.currentSetupLayoutInfo.atHeadCategory) {
+      debugPrint(
+          '_nextBudgetHeadCategory: condition: ${state.currentSetupLayoutInfo.headBudgetIndex == 0} || (${state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance == null} || ${stateModifiable.budget.isCurrentAndInitPlannedBalanceMatched(state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance!)})');
+      if (state.currentSetupLayoutInfo.headBudgetIndex == 0 ||
+          (state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance ==
+                  null ||
+              stateModifiable.budget.isCurrentAndInitPlannedBalanceMatched(state
+                  .currentSetupLayoutInfo
+                  .initialBudgetCategoryPlannedBalance!))) {
+        final nextSetupLayout = state.currentSetupLayoutInfo.copyWith(
+          layoutType: LayoutType.headCategory,
+          nextHeadBudgetIndex: true,
+          initialBudgetCategoryPlannedBalance: stateModifiable.budget
+              .getHeadCategoryCategoriesInitPlannedBalance(
+                  state.currentSetupLayoutInfo.nexHeadCategoryIndex),
+        );
+        emit(state.copyWith(currentSetupLayoutInfo: nextSetupLayout));
+      } else {
+        emit(
+          state.copyWith(
+            currentSetupLayoutInfo: state.currentSetupLayoutInfo
+                .copyWith(layoutType: LayoutType.stats),
+          ),
+        );
+        debugPrint('to stat: ${state.currentSetupLayoutInfo.toString()}');
+      }
+    }
+  }
+
+  void _fromStatsToNextHeadCategory(
+      FromStatsToNextHeadCategory event, Emitter<CreateBudgetState> emit) {
+    final stateModifiable = state.createBudgetStatus;
+    if (stateModifiable is CreateBudgetStatusModifiable &&
+        state.currentSetupLayoutInfo.atStats) {
       final nextSetupLayout = state.currentSetupLayoutInfo.copyWith(
-          layoutType: LayoutType.headCategory, nextHeadBudgetIndex: true);
+        layoutType: LayoutType.headCategory,
+        nextHeadBudgetIndex: true,
+        initialBudgetCategoryPlannedBalance: stateModifiable.budget
+            .getHeadCategoryCategoriesInitPlannedBalance(
+                state.currentSetupLayoutInfo.nexHeadCategoryIndex),
+      );
       emit(state.copyWith(currentSetupLayoutInfo: nextSetupLayout));
     }
   }
@@ -148,12 +264,12 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
   Future<void> _updateCreatedBudget(
       ModifyCreatedBudget event, Emitter<CreateBudgetState> emit) async {
     try {
-      final modifiableState = state.createBudgetStatus;
-      if (modifiableState is CreateBudgetStatusModifiable) {
+      final stateModifiable = state.createBudgetStatus;
+      if (stateModifiable is CreateBudgetStatusModifiable) {
         final DataState<String> result = await _budgetRepository.updateBudget(
-            key: modifiableState.budget.id,
-            updateBudget: modifiableState.budget);
-        if (result is DataSuccess && result.data != null) {
+            key: stateModifiable.budget.id,
+            updateBudget: stateModifiable.budget);
+        if (result is DataSuccess && result.data is Budget) {
           emit(state.copyWith(
               newCreateBudgetStatus: CreateBudgetStatusSuccess(result.data!)));
           debugPrint('added: ${result.data}');
@@ -161,7 +277,7 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
           debugPrint('in bloc: ${result.errorKey.toString()}');
           emit(state.copyWith(
               newCreateBudgetStatus: CreateBudgetStatusFailure('errorMsg')));
-          debugPrint('in bloc: ${modifiableState.toString()}');
+          debugPrint('in bloc: ${stateModifiable.toString()}');
         }
       } else {
         emit(state.copyWith(

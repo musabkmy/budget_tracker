@@ -2,13 +2,13 @@ import 'package:budget_tracker/config/theme/app_icons.dart';
 import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/providers/appearance_provider.dart';
+import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/budget_head_category_setup_view.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/build_budget_category_setup_layout.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/start_setup_view.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/total_planned_expenses_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,8 @@ class CreateBudgetSetup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appearanceProvider = Provider.of<AppearanceProvider>(context);
+    final appearanceProvider =
+        Provider.of<CreateBudgetPopupAppearanceProvider>(context);
     return Container(
       height: context.heigh * 0.9,
       width: double.maxFinite,
@@ -62,7 +63,7 @@ class _BuildSetupLayoutState extends State<BuildSetupLayout> {
         child: Column(
           children: [
             _BuildTopNav(),
-            _currentView,
+            _BuildView(currentView: _currentView),
           ],
         ));
   }
@@ -88,15 +89,9 @@ class _BuildSetupLayoutState extends State<BuildSetupLayout> {
           break;
 
         case LayoutType.stats:
-          final headCategoryName =
-              state.currentSetupLayoutInfo.nextHeadBudgetName;
-          final headCategoryIndex =
-              state.currentSetupLayoutInfo.headBudgetIndex;
-          if (headCategoryName != '') {
-            setState(() {
-              // _currentView = SetupStatView(headCategoryName);
-            });
-          }
+          setState(() {
+            _currentView = TotalPlannedExpensesLayout();
+          });
           break;
 
         case LayoutType.start:
@@ -122,10 +117,38 @@ class _BuildSetupLayoutState extends State<BuildSetupLayout> {
   }
 }
 
-class _BuildTopNav extends StatelessWidget {
+class _BuildView extends StatelessWidget {
+  const _BuildView({
+    required Widget currentView,
+  }) : _currentView = currentView;
+
+  final Widget _currentView;
+
   @override
   Widget build(BuildContext context) {
-    final appearanceProvider = Provider.of<AppearanceProvider>(context);
+    return AnimatedSwitcher(
+        duration: Duration(milliseconds: 300),
+        transitionBuilder: (child, animation) {
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: Curves.easeInOut, // Smooth curve for the animation
+          );
+
+          return FadeTransition(
+            opacity: curvedAnimation,
+            child: child,
+          );
+        },
+        child: _currentView);
+  }
+}
+
+class _BuildTopNav extends StatelessWidget {
+  const _BuildTopNav();
+  @override
+  Widget build(BuildContext context) {
+    final appearanceProvider =
+        Provider.of<CreateBudgetPopupAppearanceProvider>(context);
     return BlocSelector<CreateBudgetBloc, CreateBudgetState,
         BudgetSetupLayoutsInfo>(
       selector: (state) => state.currentSetupLayoutInfo,
@@ -136,10 +159,13 @@ class _BuildTopNav extends StatelessWidget {
             children: [
               infos.layoutType == LayoutType.start
                   ? SizedBox()
-                  : CupertinoButton(
+                  :
+                  //back pressed
+                  CupertinoButton(
                       onPressed: appearanceProvider.popupHasFocus
                           ? () {}
                           : () {
+                              appearanceProvider.toNextLayout = false;
                               context
                                   .read<CreateBudgetBloc>()
                                   .add(ToPreviousSetupLayout());
@@ -147,7 +173,7 @@ class _BuildTopNav extends StatelessWidget {
                       child: Icon(AppIcons.backIcon,
                           size: iconSize,
                           color: appearanceProvider.popupHasFocus
-                              ? CupertinoTheme.of(context).helper1Color
+                              ? CupertinoTheme.of(context).neutralShadeColor
                               : CupertinoTheme.of(context).primaryColor),
                     ),
               CupertinoButton(
@@ -155,7 +181,7 @@ class _BuildTopNav extends StatelessWidget {
                 child: Icon(AppIcons.closeIcon,
                     size: iconSize,
                     color: appearanceProvider.popupHasFocus
-                        ? CupertinoTheme.of(context).helper1Color
+                        ? CupertinoTheme.of(context).neutralShadeColor
                         : CupertinoTheme.of(context).primaryColor),
               )
             ],

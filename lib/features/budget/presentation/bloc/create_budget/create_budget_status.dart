@@ -1,4 +1,4 @@
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
@@ -22,3 +22,5 @@ class CreateBudgetStatusSuccess extends CreateBudgetStatus {
   final String budgetId;
   CreateBudgetStatusSuccess(this.budgetId);
 }
+
+extension CreateBudgetStatusExt on CreateBudgetStatus {}

@@ -39,7 +39,10 @@ Future<void> setupDi() async {
       CreateBudgetBloc(di<BudgetRepository>()));
 
   /// Providers
-  di.registerLazySingleton<AppearanceProvider>(() => AppearanceProvider());
+  di.registerLazySingleton<CreateBudgetPopupAppearanceProvider>(
+      () => CreateBudgetPopupAppearanceProvider());
+  di.registerLazySingleton<EditingNumericFieldProvider>(
+      () => EditingNumericFieldProvider());
 }
 
 Future<Directory> testSetupDi() async {

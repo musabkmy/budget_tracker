@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -5,8 +6,8 @@ class ItemThemeIcons {
   static const fitnessCenter = Icons.fitness_center;
 
   static const bank = FontAwesomeIcons.buildingColumns;
-  static const clothes = FontAwesomeIcons.shirt;
-  static const healthcare = FontAwesomeIcons.hospital;
+  static const clothes = Icons.checkroom_rounded;
+  static const healthcare = CupertinoIcons.heart_circle_fill;
   static const miscellaneous = FontAwesomeIcons.boxArchive;
   static const studentLoan = FontAwesomeIcons.graduationCap;
   static const unknown = FontAwesomeIcons.buildingColumns;
@@ -16,7 +17,7 @@ class ItemThemeIcons {
   static const concert = FontAwesomeIcons.microphone;
   static const electronics = Icons.electric_bolt_rounded;
   static const entertainment = FontAwesomeIcons.faceSmile;
-  static const gym = FontAwesomeIcons.dumbbell;
+  static const gym = CupertinoIcons.bolt;
   static const hobby = FontAwesomeIcons.boxArchive;
   static const sports = FontAwesomeIcons.futbol;
   static const subscription = Icons.subscriptions_rounded;
@@ -34,7 +35,7 @@ class ItemThemeIcons {
   static const homeSupplies = FontAwesomeIcons.broom;
   static const housing = FontAwesomeIcons.house;
   static const insurance = FontAwesomeIcons.heart;
-  static const internet = FontAwesomeIcons.wifi;
+  static const internet = CupertinoIcons.wifi;
   static const loan = FontAwesomeIcons.moneyBill1Wave;
   static const maintenance = FontAwesomeIcons.hammer;
   static const rent = FontAwesomeIcons.buildingColumns;

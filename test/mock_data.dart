@@ -1,10 +1,11 @@
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown_type.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category_type.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_head_categories.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_period.dart';
+import 'package:budget_tracker/core/init_data/item_theme_data.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_breakdown.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_breakdown_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_category.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_category_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_head_categories.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_period.dart';
 import 'package:budget_tracker/core/models/base_category_models/expense_type.dart';
 import 'package:budget_tracker/core/models/category_models/category.dart';
 import 'package:budget_tracker/core/models/item_theme.dart';
@@ -260,7 +261,7 @@ Map<BudgetBreakdownType, BudgetBreakdown> defaultBudgetBreakdown = {
       'en': 'Fixed Expenses',
     },
   ),
-  BudgetBreakdownType.variousExpense: BudgetBreakdown(
+  BudgetBreakdownType.variableExpense: BudgetBreakdown(
     localizedNames: {
       'en': 'Various Expenses',
     },
@@ -271,18 +272,32 @@ Map<BudgetBreakdownType, BudgetBreakdown> defaultBudgetBreakdown = {
     },
   ),
 };
-
 List<BudgetHeadCategory> defaultBudgetHeadCategory = [
   BudgetHeadCategory(
-      id: uuid.v4(), localizedNames: {enLan: 'Income'}, categoriesId: []),
+      id: '0',
+      localizedNames: {enLan: 'Income'},
+      categoriesId: [],
+      headCategoryColor: ItemThemeColors.limeGreen),
   BudgetHeadCategory(
-      id: uuid.v4(), localizedNames: {enLan: 'Housing'}, categoriesId: []),
+      id: '1',
+      localizedNames: {enLan: 'Housing'},
+      categoriesId: [],
+      headCategoryColor: ItemThemeColors.goldenYellow),
   BudgetHeadCategory(
-      id: uuid.v4(), localizedNames: {enLan: 'Food'}, categoriesId: []),
+      id: '2',
+      localizedNames: {enLan: 'Food'},
+      categoriesId: [],
+      headCategoryColor: ItemThemeColors.skyBlue),
   BudgetHeadCategory(
-      id: uuid.v4(), localizedNames: {enLan: 'Life Style'}, categoriesId: []),
+      id: '3',
+      localizedNames: {enLan: 'Life Style'},
+      categoriesId: [],
+      headCategoryColor: ItemThemeColors.softRed),
   BudgetHeadCategory(
-      id: uuid.v4(), localizedNames: {enLan: 'Saving'}, categoriesId: []),
+      id: '4',
+      localizedNames: {enLan: 'Saving'},
+      categoriesId: [],
+      headCategoryColor: ItemThemeColors.lightYellow),
 ];
 
 List<BudgetCategory> defaultBudgetCategory = [

@@ -29,9 +29,16 @@ class AppColors {
     darkColor: Color(0xFF282E31), // Dark mode
   );
 
-  final CupertinoDynamicColor helper1Color =
+  final CupertinoDynamicColor neutralShadeColor =
       CupertinoDynamicColor.withBrightness(
-          color: Color(0xFF3C3C3C), darkColor: Color(0xFFCCCECE));
+    color: Color(0xFF3C3C3C),
+    darkColor: Color(0xFFCCCECE),
+  );
+  final CupertinoDynamicColor contrastShadeColor =
+      CupertinoDynamicColor.withBrightness(
+    color: Color(0xFF242424),
+    darkColor: CupertinoColors.white.withOpacity(0.6),
+  );
 
   CupertinoDynamicColor get textTitleColor =>
       CupertinoDynamicColor.withBrightness(

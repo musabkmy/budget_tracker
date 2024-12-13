@@ -69,7 +69,7 @@ class AppTextStyles {
 
   TextStyle get captionBold => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 12.0.sp,
       );
@@ -77,6 +77,7 @@ class AppTextStyles {
   TextStyle get captionNormal => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
+        letterSpacing: 0.8,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 12.0.sp,
       );
@@ -99,11 +100,19 @@ class AppTextStyles {
         fontSize: 14.0.sp,
       );
 
-  TextStyle get fieldTitle => GoogleFonts.poppins(
+  TextStyle get fieldTitleGrey => GoogleFonts.poppins(
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         letterSpacing: 1.2,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
+        fontSize: 12.0.sp,
+      );
+
+  TextStyle get fieldTitleBrighter => GoogleFonts.poppins(
+        fontStyle: FontStyle.normal,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.2,
+        color: CupertinoDynamicColor.resolve(appColors.primaryColor, context),
         fontSize: 12.0.sp,
       );
 

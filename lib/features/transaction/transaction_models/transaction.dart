@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:budget_tracker/features/budget/data/models/transaction_models/category_to_wallet_transaction.dart';
-import 'package:budget_tracker/features/budget/data/models/transaction_models/wallet_to_category_transaction.dart';
-import 'package:budget_tracker/features/budget/data/models/transaction_models/wallet_to_wallet_with_category_transaction.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/category_to_wallet_transaction.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/wallet_to_category_transaction.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/wallet_to_wallet_with_category_transaction.dart';
 import 'package:budget_tracker/hive_helper/fields/transaction_fields.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';
 import 'package:hive/hive.dart';

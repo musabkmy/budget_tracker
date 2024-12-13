@@ -75,6 +75,15 @@
   "budgetPeriodLabel":"Budget period",
   "@budgetPeriodLabel": {},
   "amountLabel":"Amount",
-  "@amountLabel": {}
+  "@amountLabel": {},
+  "nextUpHeadCategoryLabel": "Next up - {headCategory}",
+  "@nextUpHeadCategoryLabel": {
+    "placeholders": {
+      "headCategory":{
+        "type": "String"
+      }
+    }
+  }
+
 
 }

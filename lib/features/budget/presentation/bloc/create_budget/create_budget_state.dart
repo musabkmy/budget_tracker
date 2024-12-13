@@ -19,18 +19,18 @@ class CreateBudgetState extends Equatable {
         ),
         "housing": NewBudgetSetupInfo(
           description: appLocalizations.housingDescription,
+          nextUp: appLocalizations.foodNextUp,
         ),
         "food": NewBudgetSetupInfo(
           description: appLocalizations.foodDescription,
-          nextUp: appLocalizations.foodNextUp,
+          nextUp: appLocalizations.lifestyleNextUp,
         ),
         "lifestyle": NewBudgetSetupInfo(
           description: appLocalizations.lifestyleDescription,
-          nextUp: appLocalizations.lifestyleNextUp,
+          nextUp: appLocalizations.savingsNextUp,
         ),
         "savings": NewBudgetSetupInfo(
           description: appLocalizations.savingsDescription,
-          nextUp: appLocalizations.savingsNextUp,
         ),
       };
   //contains infos about current step

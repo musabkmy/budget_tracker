@@ -1,13 +1,15 @@
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown_type.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category_type.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:hive/hive.dart';
+import 'package:uuid/uuid.dart';
+
 import 'package:budget_tracker/core/models/base_category_models/base_category_model.dart';
 import 'package:budget_tracker/core/models/base_category_models/expense_type.dart';
 import 'package:budget_tracker/core/models/item_theme.dart';
-import 'package:hive/hive.dart';
-import 'package:budget_tracker/hive_helper/hive_types.dart';
-import 'package:budget_tracker/hive_helper/hive_adapters.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_breakdown_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_category_type.dart';
 import 'package:budget_tracker/hive_helper/fields/budget_category_fields.dart';
-import 'package:uuid/uuid.dart';
+import 'package:budget_tracker/hive_helper/hive_adapters.dart';
+import 'package:budget_tracker/hive_helper/hive_types.dart';
 
 part 'budget_category.g.dart';
 
@@ -65,7 +67,7 @@ class BudgetCategory extends BaseCategory {
               ? BudgetBreakdownType.income
               : isFixedExpense
                   ? BudgetBreakdownType.fixedExpense
-                  : BudgetBreakdownType.variousExpense;
+                  : BudgetBreakdownType.variableExpense;
 
   void updateBalance({required bool fromCard, required double balance}) {
     fromCard ? balance += balance : balance -= balance;
@@ -79,9 +81,40 @@ class BudgetCategory extends BaseCategory {
   String toString() {
     return 'BudgetCategory(headCategoryId: $headCategoryId, id: $id, localizedNames: $localizedNames, theme: $theme, expenseType: $expenseType, isSaving: $isSaving, isRemoved: $isRemoved, hasCustomHeadCategory: $hasCustomHeadCategory, balance: $balance, plannedBalance: $plannedBalance)';
   }
+
+  BudgetCategory copyWithSameId({
+    double? balance,
+    double? plannedBalance,
+    ExpenseType? expenseType,
+    bool? isRemoved,
+    BudgetCategoryType? budgetCategoryType,
+  }) {
+    return BudgetCategory(
+      id: id,
+      headCategoryId: headCategoryId,
+      localizedNames: localizedNames,
+      theme: theme,
+      hasCustomHeadCategory: hasCustomHeadCategory,
+      balance: balance ?? this.balance,
+      plannedBalance: plannedBalance ?? this.plannedBalance,
+      expenseType: expenseType ?? this.expenseType,
+      isRemoved: isRemoved ?? this.isRemoved,
+      budgetCategoryType: budgetCategoryType ?? this.budgetCategoryType,
+    );
+  }
 }
 
 extension BudgetCategoryExt on BudgetCategory {
+  ///budgetCategoryType == BudgetCategoryType.income
   bool get isIncome => budgetCategoryType == BudgetCategoryType.income;
+
+  ///budgetCategoryType == BudgetCategoryType.expense
   bool get isExpense => budgetCategoryType == BudgetCategoryType.expense;
+
+  ///expenseType == ExpenseType.fixed
+
+  bool get isFixedExpense => expenseType == ExpenseType.fixed;
+
+  ///expenseType == ExpenseType.variable
+  bool get isVariableExpense => expenseType == ExpenseType.variable;
 }

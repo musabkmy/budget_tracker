@@ -20,7 +20,7 @@ class BudgetBreakdownTypeAdapter extends TypeAdapter<BudgetBreakdownType> {
       case 2:
         return BudgetBreakdownType.fixedExpense;
       case 3:
-        return BudgetBreakdownType.variousExpense;
+        return BudgetBreakdownType.variableExpense;
       case 4:
         return BudgetBreakdownType.otherExpense;
       default:
@@ -40,7 +40,7 @@ class BudgetBreakdownTypeAdapter extends TypeAdapter<BudgetBreakdownType> {
       case BudgetBreakdownType.fixedExpense:
         writer.writeByte(2);
         break;
-      case BudgetBreakdownType.variousExpense:
+      case BudgetBreakdownType.variableExpense:
         writer.writeByte(3);
         break;
       case BudgetBreakdownType.otherExpense:

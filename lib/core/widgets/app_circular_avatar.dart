@@ -9,7 +9,7 @@ class AppCircularAvatar extends StatelessWidget {
   const AppCircularAvatar({
     super.key,
     required this.theme,
-    this.radius = 18.0,
+    this.radius = 20.0,
   });
 
   @override
@@ -22,7 +22,10 @@ class AppCircularAvatar extends StatelessWidget {
           height: radius * 2,
           color: theme.color,
           alignment: Alignment.center,
-          child: Icon(theme.icon, size: radius),
+          child: Icon(
+            theme.icon,
+            size: radius,
+          ),
         ),
       ),
     );

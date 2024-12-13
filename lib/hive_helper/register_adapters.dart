@@ -1,9 +1,9 @@
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown_type.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category_type.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_period_type.dart';
-import 'package:budget_tracker/features/budget/data/models/transaction_models/category_to_wallet_transaction.dart';
-import 'package:budget_tracker/features/budget/data/models/transaction_models/wallet_to_category_transaction.dart';
-import 'package:budget_tracker/features/budget/data/models/transaction_models/wallet_to_wallet_with_category_transaction.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_breakdown_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_category_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_period_type.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/category_to_wallet_transaction.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/wallet_to_category_transaction.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/wallet_to_wallet_with_category_transaction.dart';
 import 'package:budget_tracker/features/wallet/wallet_models/debt_wallet.dart';
 import 'package:budget_tracker/features/wallet/wallet_models/saving_wallet.dart';
 import 'package:budget_tracker/features/wallet/wallet_models/spending_wallet.dart';
@@ -16,11 +16,11 @@ import 'package:budget_tracker/core/models/item_theme.dart';
 import 'package:budget_tracker/core/models/category_models/head_category.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_breakdown.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_category.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_head_categories.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_period.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_breakdown.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_category.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_head_categories.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_period.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
 
 void registerAdapters() {
   debugPrint('registerAdapters');

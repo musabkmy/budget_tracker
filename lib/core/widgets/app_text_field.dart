@@ -1,6 +1,7 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 class AppTextfield extends StatelessWidget {
   final String title;
@@ -19,6 +20,12 @@ class AppTextfield extends StatelessWidget {
         SizedBox(
           height: aSpPadding82,
           child: CupertinoTextField(
+            // Disables text selection handles
+            enableInteractiveSelection: false,
+            inputFormatters: [
+              //Blocks pasting
+              FilteringTextInputFormatter.deny(RegExp(r'.*')),
+            ],
             controller: controller,
             onSubmitted: valueChanged,
             style: context.appTextStyles.fieldText,
@@ -38,7 +45,7 @@ class AppTextfield extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(bottom: aPadding4),
             child: Text(title.toUpperCase(),
-                style: context.appTextStyles.fieldTitle),
+                style: context.appTextStyles.fieldTitleGrey),
           ),
         ),
       ],

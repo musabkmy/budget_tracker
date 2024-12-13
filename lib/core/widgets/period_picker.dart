@@ -1,7 +1,7 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/core/widgets/drag_handler.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_period.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_period.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +50,7 @@ class BudgetPeriodPicker extends StatelessWidget {
                           child: Text(
                             title.toUpperCase(),
                             textAlign: TextAlign.start,
-                            style: context.appTextStyles.fieldTitle,
+                            style: context.appTextStyles.fieldTitleGrey,
                           ),
                         ),
                         Expanded(
@@ -89,7 +89,7 @@ class BudgetPeriodPicker extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(bottom: aPadding4),
             child: Text(title.toUpperCase(),
-                style: context.appTextStyles.fieldTitle),
+                style: context.appTextStyles.fieldTitleGrey),
           ),
         ),
       ],

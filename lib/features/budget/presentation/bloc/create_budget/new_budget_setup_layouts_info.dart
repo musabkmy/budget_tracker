@@ -11,9 +11,15 @@ class BudgetSetupLayoutsInfo extends Equatable {
   ///index: save the process in relation to [headBudgetCount]
   ///to fetch saved head category data using [key] call [nextHeadBudgetKey]
   final int? headBudgetIndex;
+
+  ///storing [categories] - [plannedBalance] of the current [BudgetHeadCategory]
+  ///String: [BudgetCategory.id]
+  ///double: [plannedBalance]
+  final Map<String, double>? initialBudgetCategoryPlannedBalance;
   const BudgetSetupLayoutsInfo({
     this.layoutType = LayoutType.start,
     this.headBudgetIndex,
+    this.initialBudgetCategoryPlannedBalance,
   });
 
   BudgetSetupLayoutsInfo copyWith({
@@ -21,6 +27,7 @@ class BudgetSetupLayoutsInfo extends Equatable {
 
     ///pass false for previous HeadBudgetIndex
     final bool? nextHeadBudgetIndex,
+    final Map<String, double>? initialBudgetCategoryPlannedBalance,
   }) {
     debugPrint(
         'copyWith: layoutType: $layoutType, nextHeadBudgetIndex: $nextHeadBudgetIndex\nCurrent: layoutType: ${this.layoutType} headBudgetIndex: $headBudgetIndex');
@@ -37,10 +44,14 @@ class BudgetSetupLayoutsInfo extends Equatable {
     }
     return BudgetSetupLayoutsInfo(
       layoutType: layoutType,
-      headBudgetIndex:
-          (layoutType == LayoutType.headCategory && nextHeadBudgetIndex == null)
-              ? headBudgetIndex
-              : _getHeadBudgetIndex(nextHeadBudgetIndex),
+      headBudgetIndex: ((layoutType == LayoutType.headCategory ||
+                  layoutType == LayoutType.stats) &&
+              nextHeadBudgetIndex == null)
+          ? headBudgetIndex
+          : _getHeadBudgetIndex(nextHeadBudgetIndex),
+      initialBudgetCategoryPlannedBalance:
+          initialBudgetCategoryPlannedBalance ??
+              this.initialBudgetCategoryPlannedBalance,
     );
   }
 
@@ -59,6 +70,9 @@ class BudgetSetupLayoutsInfo extends Equatable {
       return headBudgetIndex != null ? (headBudgetIndex!) - 1 : 0;
     }
   }
+
+  @override
+  bool get stringify => true;
 }
 
 extension LayoutTypeExt on BudgetSetupLayoutsInfo {
@@ -86,4 +100,7 @@ extension LayoutTypeExt on BudgetSetupLayoutsInfo {
         return '';
     }
   }
+
+  int get nexHeadCategoryIndex =>
+      headBudgetIndex == null ? 0 : headBudgetIndex! + 1;
 }

@@ -22,13 +22,14 @@ class BudgetHeadCategoryAdapter extends TypeAdapter<BudgetHeadCategory> {
       totalBalance: fields[2] == null ? 0 : fields[2] as double,
       totalPlannedBalance: fields[3] == null ? 0 : fields[3] as double,
       categoriesId: (fields[4] as List).cast<String>(),
+      headCategoryColor: fields[10] as Color,
     );
   }
 
   @override
   void write(BinaryWriter writer, BudgetHeadCategory obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class BudgetHeadCategoryAdapter extends TypeAdapter<BudgetHeadCategory> {
       ..writeByte(3)
       ..write(obj.totalPlannedBalance)
       ..writeByte(4)
-      ..write(obj.categoriesId);
+      ..write(obj.categoriesId)
+      ..writeByte(10)
+      ..write(obj.headCategoryColor);
   }
 
   @override

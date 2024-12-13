@@ -33,6 +33,7 @@ dependencies:
   meta: ^1.15.0  
   font_awesome_flutter: ^10.8.0
   equatable: ^2.0.7
+  fl_chart: ^0.69.2
 
 dev_dependencies:
   flutter_test:

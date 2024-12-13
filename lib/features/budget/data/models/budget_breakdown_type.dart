@@ -6,7 +6,7 @@ import 'package:hive/hive.dart';
 part 'budget_breakdown_type.g.dart';
 
 ///gives an insights about the budget progress in terms of '[income], [saving],
-///[fixedExpense], [variousExpense] and [otherExpense]'
+///[fixedExpense], [variableExpense] and [otherExpense]'
 @HiveType(
     typeId: HiveTypes.budgetBreakdownType,
     adapterName: HiveAdapters.budgetBreakdownType)
@@ -17,8 +17,8 @@ enum BudgetBreakdownType {
   saving,
   @HiveField(BudgetBreakdownTypeFields.fixedExpense)
   fixedExpense,
-  @HiveField(BudgetBreakdownTypeFields.variousExpense)
-  variousExpense,
+  @HiveField(BudgetBreakdownTypeFields.variableExpense)
+  variableExpense,
   @HiveField(BudgetBreakdownTypeFields.otherExpense)
   otherExpense
 }

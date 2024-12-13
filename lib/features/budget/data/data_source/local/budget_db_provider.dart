@@ -1,7 +1,6 @@
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
-import 'package:budget_tracker/core/resources/data_state.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_service.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:flutter/material.dart';
 
 class BudgetDataBaseProvider {
@@ -59,8 +58,6 @@ class BudgetDataBaseProvider {
     }
   }
 
-  ///Return [DataSuccess] with [Budget.id] when succeed
-  ///Return [DataFailed] with [errorKey] when failed, call [getLocalizedMessage] to get Error Message
   Future<bool> updateBudget(
       {required String key, required Budget newBudget}) async {
     try {

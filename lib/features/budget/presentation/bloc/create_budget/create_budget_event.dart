@@ -23,11 +23,25 @@ class ChangeBudgetNameAndPeriod extends CreateBudgetEvent {
       {required this.name, required this.budgetPeriod});
 }
 
-class AddBudgetCategories extends CreateBudgetEvent {
+class NextBudgetHeadCategory extends CreateBudgetEvent {
   final String headCategoryId;
   final Iterable<BudgetCategory> categories;
-  const AddBudgetCategories(
+  const NextBudgetHeadCategory(
       {required this.headCategoryId, required this.categories});
+}
+
+class ModifyBudgetCategoryPlannedBalance extends CreateBudgetEvent {
+  final String headCategoryId;
+  final String categoryId;
+  final double newPlannedBalance;
+  const ModifyBudgetCategoryPlannedBalance(
+      {required this.headCategoryId,
+      required this.categoryId,
+      required this.newPlannedBalance});
+}
+
+class FromStatsToNextHeadCategory extends CreateBudgetEvent {
+  const FromStatsToNextHeadCategory();
 }
 
 class ModifyCreatedBudget extends CreateBudgetEvent {

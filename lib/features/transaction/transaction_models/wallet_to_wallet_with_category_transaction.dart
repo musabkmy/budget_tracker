@@ -1,4 +1,4 @@
-import 'package:budget_tracker/features/budget/data/models/transaction_models/transaction.dart';
+import 'package:budget_tracker/features/transaction/transaction_models/transaction.dart';
 import 'package:budget_tracker/hive_helper/fields/wallet_to_wallet_with_category_transaction_fields.dart';
 import 'package:budget_tracker/hive_helper/hive_adapters.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';

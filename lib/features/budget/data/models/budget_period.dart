@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:hive/hive.dart';
 
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget_period_type.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_period_type.dart';
 import 'package:budget_tracker/hive_helper/fields/budget_period_fields.dart';
 import 'package:budget_tracker/hive_helper/hive_adapters.dart';
 import 'package:budget_tracker/hive_helper/hive_types.dart';

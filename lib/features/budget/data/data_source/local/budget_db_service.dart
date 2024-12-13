@@ -2,7 +2,7 @@ import 'package:budget_tracker/config/constants/db_keys.dart';
 import 'package:budget_tracker/config/dependency_injection/di_ex.dart';
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
 import 'package:budget_tracker/core/repos/interface_repos.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -38,7 +38,7 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
         return {};
       }
     } catch (e) {
-      rethrow;
+      throw e.runtimeType;
     }
   }
 
@@ -59,10 +59,12 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
     } on ItemNotFoundException {
       throw ItemNotFoundException();
     } catch (e) {
-      rethrow;
+      throw e.runtimeType;
     }
   }
 
+  ///used when you insert a new value
+  ///if you want to update excising item use [item.save()]
   @override
   Future<bool> insertItem({required String key, required Budget item}) async {
     try {
@@ -77,7 +79,7 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
     } on InsertFailureException {
       throw InsertFailureException;
     } catch (e) {
-      rethrow;
+      throw e.runtimeType;
     }
   }
 
@@ -87,13 +89,13 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
       debugPrint(
           'update: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty} key: $key');
       if (await isBudgetAvailable(key)) {
-        await insertItem(key: key, item: item);
+        final budget = _budgetsBox.get(key);
+        await budget!.save();
         return true;
-      } else {
-        throw ItemNotFoundException;
       }
+      throw UpdateItemException;
     } catch (e) {
-      rethrow;
+      throw e.runtimeType;
     }
   }
 
@@ -111,7 +113,7 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
       throw DatabaseException;
     } catch (e) {
       debugPrint(e.toString());
-      rethrow;
+      throw e.runtimeType;
     }
     throw DatabaseException;
   }
@@ -125,20 +127,20 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   @override
   Future<bool> isDataAvailable() async {
     try {
-      return _budgetsBox.isEmpty;
+      return _budgetsBox.isOpen && _budgetsBox.isEmpty;
     } catch (e) {
       // Handle error checking box emptiness
       debugPrint('Error checking if box is empty: $e');
-      return false; // Return true assuming it's empty on error
+      throw e.runtimeType; // Return true assuming it's empty on error
     }
   }
 
   Future<bool> isBudgetAvailable(String key) async {
     try {
-      return _budgetsBox.containsKey(key);
+      return _budgetsBox.isOpen && _budgetsBox.containsKey(key);
     } catch (e) {
       debugPrint('Error isBudgetAvailable: $e');
-      return false; // Return true assuming it's empty on error
+      throw e.runtimeType; // Return true assuming it's empty on error
     }
   }
 }
