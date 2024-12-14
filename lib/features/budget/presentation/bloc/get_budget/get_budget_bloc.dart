@@ -6,6 +6,8 @@ part 'get_budget_state.dart';
 
 class GetBudgetBloc extends Bloc<GetBudgetEvent, GetBudgetState> {
   GetBudgetBloc() : super(GetBudgetInitial()) {
+    final defaultGetBudgetIndex = 0;
+
     on<GetBudgetEvent>((event, emit) {
       // TODO: implement event handler
     });

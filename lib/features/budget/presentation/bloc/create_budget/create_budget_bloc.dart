@@ -31,7 +31,7 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
     on<ChangeBudgetNameAndPeriod>(_changeBudgetNameAndPeriod);
     on<ToPreviousSetupLayout>(_toPreviousSetupLayout);
     on<ModifyBudgetCategoryPlannedBalance>(_modifyBudgetCategoryPlannedBalance);
-    on<NextBudgetHeadCategory>(_nextBudgetHeadCategory);
+    on<NextBudgetHeadCategory>(_afterBudgetHeadCategory);
     on<FromStatsToNextHeadCategory>(_fromStatsToNextHeadCategory);
   }
 
@@ -212,19 +212,23 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
     }
   }
 
-  void _nextBudgetHeadCategory(
+  void _afterBudgetHeadCategory(
       NextBudgetHeadCategory event, Emitter<CreateBudgetState> emit) {
     final stateModifiable = state.createBudgetStatus;
     if (stateModifiable is CreateBudgetStatusModifiable &&
         state.currentSetupLayoutInfo.atHeadCategory) {
-      debugPrint(
-          '_nextBudgetHeadCategory: condition: ${state.currentSetupLayoutInfo.headBudgetIndex == 0} || (${state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance == null} || ${stateModifiable.budget.isCurrentAndInitPlannedBalanceMatched(state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance!)})');
-      if (state.currentSetupLayoutInfo.headBudgetIndex == 0 ||
-          (state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance ==
-                  null ||
-              stateModifiable.budget.isCurrentAndInitPlannedBalanceMatched(state
-                  .currentSetupLayoutInfo
-                  .initialBudgetCategoryPlannedBalance!))) {
+      if (state.currentSetupLayoutInfo.headBudgetIndex! >=
+          state.currentSetupLayoutInfo.headBudgetCount - 1) {
+        debugPrint('last head category');
+        emit(state.copyWith(
+          currentSetupLayoutInfo: state.currentSetupLayoutInfo
+              .copyWith(layoutType: LayoutType.finish),
+        ));
+      } else if (state.currentSetupLayoutInfo.headBudgetIndex == 0 ||
+          state.currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance ==
+              null ||
+          stateModifiable.budget.isCurrentAndInitPlannedBalanceMatched(state
+              .currentSetupLayoutInfo.initialBudgetCategoryPlannedBalance!)) {
         final nextSetupLayout = state.currentSetupLayoutInfo.copyWith(
           layoutType: LayoutType.headCategory,
           nextHeadBudgetIndex: true,

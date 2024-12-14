@@ -2,11 +2,14 @@ import 'package:budget_tracker/config/theme/app_icons.dart';
 import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
+import 'package:budget_tracker/core/utils/extensions.dart';
+import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/budget_head_category_setup_view.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/finish_setup_view.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/start_setup_view.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/total_planned_expenses_layout.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,50 +72,45 @@ class _BuildSetupLayoutState extends State<BuildSetupLayout> {
   }
 
   void _handlePageChange(CreateBudgetState state) {
-    if (state.createBudgetStatus is CreateBudgetStatusModifiable) {
-      final layoutType = state.currentSetupLayoutInfo.layoutType;
-      switch (layoutType) {
-        case LayoutType.headCategory:
-          final headCategoryName =
-              state.currentSetupLayoutInfo.nextHeadBudgetName;
-          final headCategoryIndex =
-              state.currentSetupLayoutInfo.headBudgetIndex;
-          debugPrint('headCategoryName: $headCategoryName');
-          if (headCategoryName != '') {
-            setState(() {
-              debugPrint('_currentView to $headCategoryName');
-              _currentView = BudgetHeadCategorySetupView(Key(headCategoryName),
-                  headCategoryName: headCategoryName,
-                  headCategoryIndex: headCategoryIndex!);
-            });
-          }
-          break;
-
-        case LayoutType.stats:
+    final layoutType = state.currentSetupLayoutInfo.layoutType;
+    switch (layoutType) {
+      case LayoutType.headCategory:
+        final headCategoryName =
+            state.currentSetupLayoutInfo.nextHeadBudgetName;
+        final headCategoryIndex = state.currentSetupLayoutInfo.headBudgetIndex;
+        debugPrint('headCategoryName: $headCategoryName');
+        if (headCategoryName != '') {
           setState(() {
-            _currentView = TotalPlannedExpensesLayout();
+            debugPrint('_currentView to $headCategoryName');
+            _currentView = BudgetHeadCategorySetupView(Key(headCategoryName),
+                headCategoryName: headCategoryName,
+                headCategoryIndex: headCategoryIndex!);
           });
-          break;
+        }
+        break;
 
-        case LayoutType.start:
-          setState(() {
-            _currentView = StartSetupView();
-          });
-          break;
+      case LayoutType.stats:
+        setState(() {
+          _currentView = TotalPlannedExpensesLayout();
+        });
+        break;
 
-        case LayoutType.finish:
-          setState(() {
-            _currentView = StartSetupView();
-          });
-          break;
+      case LayoutType.start:
+        setState(() {
+          _currentView = StartSetupView();
+        });
+        break;
 
-        default:
-          setState(() {
-            _currentView = const SizedBox();
-          });
-      }
-    } else {
-      _currentView = const SizedBox();
+      case LayoutType.finish:
+        setState(() {
+          _currentView = FinishSetupView();
+        });
+        break;
+
+      default:
+        setState(() {
+          _currentView = const SizedBox();
+        });
     }
   }
 }
@@ -149,15 +147,27 @@ class _BuildTopNav extends StatelessWidget {
   Widget build(BuildContext context) {
     final appearanceProvider =
         Provider.of<CreateBudgetPopupAppearanceProvider>(context);
+    //get the layout type, total income and total planned expenses
     return BlocSelector<CreateBudgetBloc, CreateBudgetState,
-        BudgetSetupLayoutsInfo>(
-      selector: (state) => state.currentSetupLayoutInfo,
-      builder: (context, infos) {
+        (BudgetSetupLayoutsInfo, (double?, double?))>(
+      selector: (state) {
+        final stateModifiable = state.createBudgetStatus;
+        return (
+          state.currentSetupLayoutInfo,
+          (stateModifiable is CreateBudgetStatusModifiable)
+              ? (stateModifiable.budget.getIncomeAndPlannedExpenses())
+              : (null, null)
+        );
+      },
+      builder: (context, data) {
+        final layoutType = data.$1.layoutType;
+        final totalPlannedIncome = data.$2.$1 ?? 0;
+        final totalPlannedExpenses = data.$2.$2 ?? 0;
         return SizedBox(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              infos.layoutType == LayoutType.start
+              layoutType == LayoutType.start
                   ? SizedBox()
                   :
                   //back pressed
@@ -176,6 +186,14 @@ class _BuildTopNav extends StatelessWidget {
                               ? CupertinoTheme.of(context).neutralShadeColor
                               : CupertinoTheme.of(context).primaryColor),
                     ),
+              (layoutType == LayoutType.headCategory ||
+                          layoutType == LayoutType.stats) &&
+                      totalPlannedIncome != 0 &&
+                      totalPlannedExpenses != 0
+                  ? _BuildExpensesToIncomeLayout(
+                      totalPlannedIncome: totalPlannedIncome,
+                      totalPlannedExpenses: totalPlannedExpenses)
+                  : SizedBox(),
               CupertinoButton(
                 onPressed: appearanceProvider.popupHasFocus ? () {} : () {},
                 child: Icon(AppIcons.closeIcon,
@@ -188,6 +206,83 @@ class _BuildTopNav extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _BuildExpensesToIncomeLayout extends StatelessWidget {
+  const _BuildExpensesToIncomeLayout({
+    required this.totalPlannedIncome,
+    required this.totalPlannedExpenses,
+  });
+
+  final double totalPlannedIncome;
+  final double totalPlannedExpenses;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: context.width * .6,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text.rich(
+            textAlign: TextAlign.center,
+            TextSpan(
+                text:
+                    'US\$ ${(totalPlannedIncome - totalPlannedExpenses).abs().priceFormat}  ',
+                style: context.appTextStyles.bodyBold,
+                children: [
+                  TextSpan(
+                    text: totalPlannedExpenses <= totalPlannedIncome
+                        ? 'left of income'
+                        : totalPlannedIncome == 0
+                            ? 'Planned Expenses'
+                            : 'over income',
+                    style: context.appTextStyles.bodyNormal,
+                  ),
+                ]),
+          ),
+          SizedBox(height: aSpPadding4),
+          _AppProgressLine(
+              progress: totalPlannedIncome == 0 ||
+                      totalPlannedIncome <= totalPlannedExpenses
+                  ? 1
+                  : (totalPlannedExpenses) / (totalPlannedIncome)),
+        ],
+      ),
+    );
+  }
+}
+
+class _AppProgressLine extends StatelessWidget {
+  final double progress; // Value from 0.0 to 1.0
+
+  const _AppProgressLine({required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: context.width * .5, // Full-width progress bar
+      height: 2, // Height of the progress line
+      decoration: BoxDecoration(
+        color: CupertinoTheme.of(context)
+            .scaffoldBackgroundColor, // Progress line color
+        // Background color
+        borderRadius: BorderRadius.circular(2),
+      ),
+
+      child: FractionallySizedBox(
+        widthFactor: progress, // Progress indicator width
+        alignment: Alignment.centerLeft,
+        child: Container(
+          decoration: BoxDecoration(
+            color:
+                CupertinoTheme.of(context).primaryColor, // Progress line color
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+      ),
     );
   }
 }

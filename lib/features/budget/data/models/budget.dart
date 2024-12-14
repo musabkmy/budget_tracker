@@ -180,10 +180,17 @@ extension BudgetExt on Budget {
   ///get currently total planned balance in [Budget]
   double getTotalPlannedExpenses() {
     double sum = 0;
-    for (var element in headCategories.values) {
+    for (var element in headCategories.values.skip(1)) {
       sum += element.totalPlannedBalance;
     }
     return sum;
+  }
+
+  (double totalIncome, double totalPlannedExpenses)
+      getIncomeAndPlannedExpenses() {
+    final totalIncome = headCategories.values.first.totalPlannedBalance;
+
+    return (totalIncome, getTotalPlannedExpenses());
   }
 
   ///get init [category.id] and [plannedBalance] of each [category] in [headCategory]

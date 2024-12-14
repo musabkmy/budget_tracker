@@ -1,12 +1,16 @@
-import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 
 ///must have finite width in parent
 class FlexibleDots extends StatelessWidget {
-  final double dotSize; // Size of each dot
-  final double spacing; // Spacing between dots
+  final double dotSize;
+  final double spacing;
+  final bool lightOpacity;
 
-  const FlexibleDots({super.key, this.dotSize = 4.0, this.spacing = 4.0});
+  const FlexibleDots(
+      {super.key,
+      this.dotSize = 2.0,
+      this.spacing = 8.0,
+      required this.lightOpacity});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +31,10 @@ class FlexibleDots extends StatelessWidget {
               margin:
                   EdgeInsets.only(right: index < dotCount - 1 ? spacing : 0),
               decoration: BoxDecoration(
-                color: CupertinoTheme.of(context).neutralShadeColor,
                 shape: BoxShape.circle,
+                color: CupertinoTheme.of(context)
+                    .primaryColor
+                    .withOpacity(lightOpacity ? .3 : .5),
               ),
             );
           }),

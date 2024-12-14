@@ -32,6 +32,9 @@ class CreateBudgetState extends Equatable {
         "savings": NewBudgetSetupInfo(
           description: appLocalizations.savingsDescription,
         ),
+        "finish": NewBudgetSetupInfo(
+            title: appLocalizations.finishTitle,
+            description: appLocalizations.finishDescription),
       };
   //contains infos about current step
   final BudgetSetupLayoutsInfo currentSetupLayoutInfo;
