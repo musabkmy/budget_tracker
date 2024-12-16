@@ -6,3 +6,10 @@ sealed class GetBudgetEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+//get default
+class GetBudgetData extends GetBudgetEvent {
+  final String key;
+
+  const GetBudgetData({required this.key});
+}

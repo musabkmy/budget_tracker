@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
+import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
+
 import 'di_ex.dart';
 
 GetIt di = GetIt.instance;
@@ -34,9 +37,14 @@ Future<void> setupDi() async {
   ));
 
   /// Blocs
-  // Budget
+  /// get all budgets metadata
+  di.registerSingleton<GetBudgetsMetadataBloc>(
+      GetBudgetsMetadataBloc(di<BudgetRepository>()));
+  // Create a Budget
   di.registerSingleton<CreateBudgetBloc>(
       CreateBudgetBloc(di<BudgetRepository>()));
+  // get specific budget
+  di.registerSingleton<GetBudgetBloc>(GetBudgetBloc(di<BudgetRepository>()));
 
   /// Providers
   di.registerLazySingleton<CreateBudgetPopupAppearanceProvider>(

@@ -1,6 +1,7 @@
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_service.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_metadata.dart';
 import 'package:flutter/material.dart';
 
 class BudgetDataBaseProvider {
@@ -71,5 +72,16 @@ class BudgetDataBaseProvider {
   /// Is Data Available
   Future<bool> isPostDataAvailable() async {
     return await _budgetDataBaseService.isDataAvailable();
+  }
+
+  Future<List<BudgetMetadata>> getBudgetsMetadata() async {
+    try {
+      final List<BudgetMetadata> result =
+          await _budgetDataBaseService.getBudgetsMetadata();
+      return result;
+    } catch (e) {
+      debugPrint('in provider: ${e.toString()}');
+      rethrow;
+    }
   }
 }

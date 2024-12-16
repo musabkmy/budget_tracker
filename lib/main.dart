@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:budget_tracker/core/settings/app_block_observer.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app.dart';
@@ -10,6 +11,14 @@ import 'core/settings/settings_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Lock the status bar style for the entire app
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: CupertinoColors.systemRed, // Transparent background
+      statusBarIconBrightness: Brightness.dark, // Dark icons
+    ),
+  );
   await ScreenUtil.ensureScreenSize();
 
   /// waiting to inject the application dependencies

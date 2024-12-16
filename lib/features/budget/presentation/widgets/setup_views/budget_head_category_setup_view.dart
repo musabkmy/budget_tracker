@@ -53,8 +53,8 @@ class _BudgetHeadCategorySetupViewState
 
     if (stateStatus is CreateBudgetStatusModifiable) {
       setState(() {
-        debugPrint('_currentActionView: AppFilledCupertinoButton');
-        _currentActionView = AppFilledCupertinoButton(
+        debugPrint('_currentActionView: AppFilledButton');
+        _currentActionView = AppFilledButton(
             text: AppLocalizations.of(context)!.continueLabel,
             onPressed: () {
               context.read<CreateBudgetPopupAppearanceProvider>().toNextLayout =

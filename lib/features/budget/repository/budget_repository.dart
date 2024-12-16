@@ -2,6 +2,7 @@ import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
 import 'package:budget_tracker/core/resources/data_state.dart';
 import 'package:budget_tracker/features/budget/data/data_source/local/budget_db_provider.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_metadata.dart';
 import 'package:flutter/material.dart';
 
 class BudgetRepository {
@@ -10,6 +11,17 @@ class BudgetRepository {
   BudgetRepository(
     this._budgetDataBaseProvider,
   );
+
+  Future<DataState<List<BudgetMetadata>>> getBudgetsMetadata() async {
+    try {
+      final List<BudgetMetadata> result =
+          await _budgetDataBaseProvider.getBudgetsMetadata();
+      debugPrint('getBudgetsMetadata success');
+      return DataSuccess(result);
+    } catch (e) {
+      return DataFailed('UnknownException', _exceptionItemType);
+    }
+  }
 
   Future<DataState<String>> insertBudget({required Budget newBudget}) async {
     try {

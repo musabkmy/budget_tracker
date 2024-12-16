@@ -28,15 +28,15 @@ class BudgetPeriod extends HiveObject {
 
   //available instances
   static final BudgetPeriod week =
-      BudgetPeriod._(BudgetPeriodType.week, 'Week', 7);
+      BudgetPeriod._(BudgetPeriodType.week, 'Weekly', 7);
   static final BudgetPeriod biWeek =
       BudgetPeriod._(BudgetPeriodType.biWeek, 'Bi-Week', 14);
   static final BudgetPeriod month =
-      BudgetPeriod._(BudgetPeriodType.month, 'Month', 30);
+      BudgetPeriod._(BudgetPeriodType.month, 'Monthly', 30);
   static final BudgetPeriod biMonth =
       BudgetPeriod._(BudgetPeriodType.biMonth, 'Bi-Month', 60);
   static final BudgetPeriod year =
-      BudgetPeriod._(BudgetPeriodType.year, 'Year', 260);
+      BudgetPeriod._(BudgetPeriodType.year, 'Yearly', 260);
 
   //get all available instances
   static List<BudgetPeriod> get allBudgetPeriods =>

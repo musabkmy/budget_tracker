@@ -59,9 +59,10 @@ class FinishSetupView extends StatelessWidget {
                 //to next head category btn
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: AppFilledCupertinoButton(
+                  child: AppFilledButton(
                       text: appLocalizations.continueLabel,
                       onPressed: () {
+                        //TODO: save the budget in perment place
                         Navigator.pop(context);
                       }),
                 ),

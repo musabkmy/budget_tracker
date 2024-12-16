@@ -38,7 +38,6 @@ class AppTextStyles {
       );
 
   TextStyle get title => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
         // height: 1.4,
@@ -46,7 +45,6 @@ class AppTextStyles {
       );
 
   TextStyle get subTitle => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
         height: 1.4,
@@ -54,28 +52,24 @@ class AppTextStyles {
       );
 
   TextStyle get bodyBold => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textBodyColor, context),
         fontSize: 14.0.sp,
       );
 
   TextStyle get bodyNormal => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 14.0.sp,
       );
 
   TextStyle get captionBold => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
         fontSize: 12.0.sp,
       );
 
   TextStyle get captionNormal => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.normal,
         letterSpacing: 0.8,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
@@ -83,7 +77,6 @@ class AppTextStyles {
       );
 
   TextStyle get action1 => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.2,
         color: CupertinoDynamicColor.resolve(
@@ -92,7 +85,6 @@ class AppTextStyles {
       );
 
   TextStyle get action2 => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.2,
         color: CupertinoDynamicColor.resolve(
@@ -101,7 +93,6 @@ class AppTextStyles {
       );
 
   TextStyle get fieldTitleGrey => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         letterSpacing: 1.2,
         color: CupertinoDynamicColor.resolve(appColors.textBody2Color, context),
@@ -109,7 +100,6 @@ class AppTextStyles {
       );
 
   TextStyle get fieldTitleBrighter => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.bold,
         letterSpacing: 1.2,
         color: CupertinoDynamicColor.resolve(appColors.primaryColor, context),
@@ -117,11 +107,18 @@ class AppTextStyles {
       );
 
   TextStyle get fieldText => GoogleFonts.poppins(
-        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w600,
         letterSpacing: 0.5,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
         height: 1.4,
         fontSize: adjustFont(14.0.sp),
+      );
+
+  TextStyle get tabText => GoogleFonts.poppins(
+        fontWeight: FontWeight.w500,
+        letterSpacing: 1.2,
+        color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
+        height: 1.4,
+        fontSize: adjustFont(16.0.sp),
       );
 }

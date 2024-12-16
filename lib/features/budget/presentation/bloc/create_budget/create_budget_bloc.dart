@@ -21,7 +21,7 @@ part 'create_budget_state.dart';
 
 class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
   final BudgetRepository _budgetRepository;
-  bool nextStep = false;
+  // bool nextStep = false;
   CreateBudgetBloc(this._budgetRepository)
       : super(CreateBudgetState(
             createBudgetStatus: CreateBudgetStatusInit(),

@@ -4,7 +4,7 @@ abstract class InterfaceRepository<T> {
   Future<Iterable<T>> getAll();
 
   /// Remove All Data From DB
-  Future<bool> removeAll();
+  Future<void> removeAll();
 
   /// Get Item From DB
   Future<T?> getItem({required String key});

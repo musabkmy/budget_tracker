@@ -82,7 +82,7 @@ class TotalPlannedExpensesLayout extends StatelessWidget {
                 //to next head category btn
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: AppFilledCupertinoButton(
+                  child: AppFilledButton(
                       text: appLocalizations.continueLabel,
                       onPressed: () {
                         context

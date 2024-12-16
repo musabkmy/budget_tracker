@@ -137,7 +137,7 @@ class _ContinueButton extends StatelessWidget {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Align(
       alignment: Alignment.bottomCenter,
-      child: AppFilledCupertinoButton(
+      child: AppFilledButton(
           text: appLocalizations.continueLabel,
           onPressed: () {
             context.read<CreateBudgetPopupAppearanceProvider>().toNextLayout =

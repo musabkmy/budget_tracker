@@ -34,15 +34,14 @@ class BuildActions extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          AppFilledCupertinoButton(
+          AppFilledButton(
               text: appLocalizations.getStarted,
               withBottomPadding: false,
               onPressed: () {
                 context.read<CreateBudgetBloc>().add(CreateDefaultBudget());
                 showCustomCupertinoBottomSheet(context);
               }),
-          AppSecondaryCupertinoButton(
-              text: appLocalizations.skipSetup, onPressed: () {}),
+          AppTextButton(text: appLocalizations.skipSetup, onPressed: () {}),
         ],
       ),
     ));

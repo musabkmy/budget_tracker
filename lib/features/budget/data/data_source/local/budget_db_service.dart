@@ -3,6 +3,7 @@ import 'package:budget_tracker/config/dependency_injection/di_ex.dart';
 import 'package:budget_tracker/core/exceptions/db_exceptions.dart';
 import 'package:budget_tracker/core/repos/interface_repos.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
+import 'package:budget_tracker/features/budget/data/models/budget_metadata.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -100,12 +101,12 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   }
 
   @override
-  Future<bool> removeAll() {
+  Future<void> removeAll() async {
     try {
       debugPrint(
           'remove all: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty}');
       if (_budgetsBox.isOpen && _budgetsBox.isNotEmpty) {
-        _budgetsBox.clear();
+        await _budgetsBox.clear();
       } else {
         throw DatabaseException;
       }
@@ -115,7 +116,6 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
       debugPrint(e.toString());
       throw e.runtimeType;
     }
-    throw DatabaseException;
   }
 
   @override
@@ -138,6 +138,26 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   Future<bool> isBudgetAvailable(String key) async {
     try {
       return _budgetsBox.isOpen && _budgetsBox.containsKey(key);
+    } catch (e) {
+      debugPrint('Error isBudgetAvailable: $e');
+      throw e.runtimeType; // Return true assuming it's empty on error
+    }
+  }
+
+  Future<List<BudgetMetadata>> getBudgetsMetadata() async {
+    try {
+      if (!_budgetsBox.isOpen) {
+        throw ItemNotFoundException;
+      }
+      final result = _budgetsBox.keys.map((key) {
+        final id = _budgetsBox.get(key)!.id;
+        final name = _budgetsBox.get(key)!.name;
+        final budgetPeriod = _budgetsBox.get(key)!.budgetPeriod;
+        final metadata =
+            BudgetMetadata(key: id, name: name, budgetPeriod: budgetPeriod);
+        return metadata;
+      }).toList();
+      return result;
     } catch (e) {
       debugPrint('Error isBudgetAvailable: $e');
       throw e.runtimeType; // Return true assuming it's empty on error

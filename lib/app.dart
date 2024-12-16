@@ -1,10 +1,13 @@
 import 'package:budget_tracker/config/dependency_injection/di.dart';
 import 'package:budget_tracker/config/theme/app_theme.dart';
+import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
+import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/page/budget_page.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -35,7 +38,10 @@ class MyApp extends StatelessWidget {
     // return
     return MultiBlocProvider(
       providers: [
+        BlocProvider<GetBudgetsMetadataBloc>(
+            create: (_) => di<GetBudgetsMetadataBloc>()),
         BlocProvider<CreateBudgetBloc>(create: (_) => di<CreateBudgetBloc>()),
+        BlocProvider<GetBudgetBloc>(create: (_) => di<GetBudgetBloc>()),
       ],
       child: MultiProvider(
         providers: [

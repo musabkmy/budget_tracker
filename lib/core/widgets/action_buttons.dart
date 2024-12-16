@@ -2,11 +2,11 @@ import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:flutter/cupertino.dart';
 
-class AppFilledCupertinoButton extends StatelessWidget {
+class AppFilledButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool withBottomPadding;
-  const AppFilledCupertinoButton(
+  const AppFilledButton(
       {super.key,
       required this.text,
       required this.onPressed,
@@ -28,11 +28,21 @@ class AppFilledCupertinoButton extends StatelessWidget {
   }
 }
 
-class AppSecondaryCupertinoButton extends StatelessWidget {
-  final String text;
+class AppTextButton extends StatelessWidget {
+  final String? text;
   final VoidCallback? onPressed;
-  const AppSecondaryCupertinoButton(
-      {super.key, required this.text, required this.onPressed});
+  final bool withoutPadding;
+  final Widget? child;
+
+  ///text must be provided or child must be declared
+
+  const AppTextButton({
+    super.key,
+    this.text,
+    required this.onPressed,
+    this.withoutPadding = false,
+    this.child,
+  }) : assert(child != null || text != null);
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +50,14 @@ class AppSecondaryCupertinoButton extends StatelessWidget {
       height: aButtonHeight,
       width: double.maxFinite,
       child: CupertinoButton(
+        padding: withoutPadding
+            ? EdgeInsetsDirectional.zero
+            : EdgeInsetsDirectional.all(aSpPadding12),
         focusColor: CupertinoColors.transparent,
         disabledColor: CupertinoColors.transparent,
         borderRadius: aButtonBorderRadius,
         onPressed: onPressed,
-        child: Text(text, style: context.appTextStyles.action2),
+        child: child ?? Text(text!, style: context.appTextStyles.action2),
       ),
     );
   }
