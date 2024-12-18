@@ -66,10 +66,6 @@
   "@finishTitle":{},
   "finishDescription" : "Great job! Remember, you can edit anything you're just entered and add a new categories after on.",
   "@finishDescription":{},
-  "leftOfIncomeText":"left of income",
-  "@leftOfIncomeText": {},
-  "overIncomeText":"over income",
-  "@overIncomeText": {},
   "totalPlannedExpenses":"Total planned expenses",
   "@totalPlannedExpenses": {},
   "continueLabel":"Continue",
@@ -87,7 +83,17 @@
         "type": "String"
       }
     }
-  }
-
-
+  },
+  "planLabel": "Plan",
+  "@planLabel": {},
+  "remainingLabel": "remaining",
+  "@remainingLabel": {},
+  "insightsLabel": "insights",
+  "@insightsLabel": {},
+  "leftOfIncomeLabel":"left of income",
+  "@leftOfIncomeLabel": {},
+  "plannedExpensesLabel":"Planned Expenses",
+  "@plannedExpensesLabel": {},
+  "overIncomeLabel":"over income",
+  "@overIncomeLabel": {}
 }

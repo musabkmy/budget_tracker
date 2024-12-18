@@ -21,13 +21,13 @@ class AppTextfield extends StatelessWidget {
           height: aSpPadding82,
           child: CupertinoTextField(
             // Disables text selection handles
-            enableInteractiveSelection: false,
-            inputFormatters: [
-              //Blocks pasting
-              FilteringTextInputFormatter.deny(RegExp(r'.*')),
-            ],
+            // enableInteractiveSelection: false,
+            // inputFormatters: [
+            //Blocks pasting
+            //   FilteringTextInputFormatter.deny(RegExp(r'.*')),
+            // ],
             controller: controller,
-            onSubmitted: valueChanged,
+            onChanged: valueChanged,
             style: context.appTextStyles.fieldText,
             textAlignVertical: TextAlignVertical.bottom,
             maxLines: 1,

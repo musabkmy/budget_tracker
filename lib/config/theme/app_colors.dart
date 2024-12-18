@@ -68,6 +68,10 @@ class AppColors {
       CupertinoDynamicColor.withBrightness(
           color: _darkGreen, darkColor: _darkGreen);
 
+  CupertinoDynamicColor get budgetAccentColor =>
+      CupertinoDynamicColor.withBrightness(
+          color: _lightGreen, darkColor: _lightGreen);
+
   CupertinoDynamicColor get partialTransparentColor =>
       CupertinoDynamicColor.withBrightness(
           color: CupertinoColors.white.withOpacity(0.2),

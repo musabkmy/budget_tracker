@@ -13,6 +13,7 @@ class GetBudgetBloc extends Bloc<GetBudgetEvent, GetBudgetState> {
   GetBudgetBloc(this._budgetRepository)
       : super(GetBudgetState(status: GetBudgetStateStatus.initial)) {
     on<GetBudgetData>(_getBudgetData);
+    on<ChangeBudgetViewCurrentLayout>(_changeCurrentLayout);
   }
 
   Future<void> _getBudgetData(
@@ -36,5 +37,10 @@ class GetBudgetBloc extends Bloc<GetBudgetEvent, GetBudgetState> {
         errorMessage: e.toString(),
       ));
     }
+  }
+
+  void _changeCurrentLayout(
+      ChangeBudgetViewCurrentLayout event, Emitter<GetBudgetState> emit) {
+    emit(state.copyWith(currentLayout: event.layout));
   }
 }

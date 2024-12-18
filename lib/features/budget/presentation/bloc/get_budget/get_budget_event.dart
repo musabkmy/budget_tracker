@@ -13,3 +13,8 @@ class GetBudgetData extends GetBudgetEvent {
 
   const GetBudgetData({required this.key});
 }
+
+class ChangeBudgetViewCurrentLayout extends GetBudgetEvent {
+  const ChangeBudgetViewCurrentLayout({required this.layout});
+  final BudgetViewLayoutType layout;
+}

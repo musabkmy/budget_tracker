@@ -3,10 +3,8 @@ import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
-import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_info.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/build_setup_title_subtitle.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/build_state.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/total_planned_expenses_layout.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_setup_title_subtitle.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -30,28 +28,20 @@ class FinishSetupView extends StatelessWidget {
                 state.getNewBudgetSetupInfo(appLocalizations)['finish']!;
             return Stack(
               children: [
-                Expanded(
-                  child: ListView(
+                SizedBox(
+                  height: context.heigh * .8,
+                  child: Column(
+                    // padding: EdgeInsets.zero,
                     children: [
                       BuildSetupTitleSubtitle(
                         info: finishInfo,
                         withTopPadding: false,
                       ),
-                      SizedBox(
-                        height: context.heigh * .7,
-                        child: Column(
-                          children: [
-                            //actual stats
-                            BuildStats(
-                              currentSetupLayoutInfo:
-                                  state.currentSetupLayoutInfo,
-                              headCategories: headCategories,
-                              totalIncomeAndPlannedExpenses: stateModifiable
-                                  .budget
-                                  .getIncomeAndPlannedExpenses(),
-                            ),
-                          ],
-                        ),
+                      //actual stats
+                      BuildStats(
+                        headCategories: headCategories,
+                        totalIncomeAndPlannedExpenses: stateModifiable.budget
+                            .getIncomeAndPlannedExpenses(),
                       ),
                     ],
                   ),

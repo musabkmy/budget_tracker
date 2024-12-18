@@ -65,7 +65,6 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
   }
 
   ///used when you insert a new value
-  ///if you want to update excising item use [item.save()]
   @override
   Future<bool> insertItem({required String key, required Budget item}) async {
     try {
@@ -90,8 +89,8 @@ class BudgetDataBaseService implements InterfaceRepository<Budget> {
       debugPrint(
           'update: _budgetsBox.isOpen: ${_budgetsBox.isOpen} _budgetsBox.isNotEmpty: ${_budgetsBox.isNotEmpty} key: $key');
       if (await isBudgetAvailable(key)) {
-        final budget = _budgetsBox.get(key);
-        await budget!.save();
+        // final budget = _budgetsBox.get(key);
+        await _budgetsBox.put(key, item);
         return true;
       }
       throw UpdateItemException;

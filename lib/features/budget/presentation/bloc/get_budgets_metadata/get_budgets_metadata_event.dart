@@ -10,3 +10,8 @@ sealed class GetBudgetsMetadataEvent extends Equatable {
 class GetBudgetsMetaData extends GetBudgetsMetadataEvent {
   const GetBudgetsMetaData();
 }
+
+class ChangeViewedBudgetKey extends GetBudgetsMetadataEvent {
+  const ChangeViewedBudgetKey(this.key);
+  final String key;
+}

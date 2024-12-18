@@ -7,6 +7,9 @@ BorderRadius aButtonBorderRadius = BorderRadius.circular(80.0.sp);
 ///12.0.sp
 BorderRadius aBottomSheetRadius = BorderRadius.circular(aSpPadding12);
 
+///16.0.sp
+BorderRadius aCardRadius = BorderRadius.circular(aSpPadding16);
+
 ///12.0.sp
 BorderRadius aEditingFieldRadius = BorderRadius.circular(aSpPadding12);
 
@@ -54,6 +57,9 @@ double aSpPadding8 = 8.0.sp;
 
 ///12.0.sp
 double aSpPadding12 = 12.0.sp;
+
+///14.0.sp
+double aSpPadding14 = 14.0.sp;
 
 ///16.0.sp
 double aSpPadding16 = 16.0.sp;

@@ -51,6 +51,13 @@ class AppTextStyles {
         fontSize: adjustFont(16.0.sp),
       );
 
+  TextStyle get largeBody => GoogleFonts.poppins(
+        fontWeight: FontWeight.w600,
+        color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
+        // height: 1.4,
+        fontSize: adjustFont(20.0.sp),
+      );
+
   TextStyle get bodyBold => GoogleFonts.poppins(
         fontWeight: FontWeight.bold,
         color: CupertinoDynamicColor.resolve(appColors.textBodyColor, context),
@@ -115,10 +122,10 @@ class AppTextStyles {
       );
 
   TextStyle get tabText => GoogleFonts.poppins(
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         letterSpacing: 1.2,
         color: CupertinoDynamicColor.resolve(appColors.textTitleColor, context),
         height: 1.4,
-        fontSize: adjustFont(16.0.sp),
+        fontSize: adjustFont(14.0.sp),
       );
 }

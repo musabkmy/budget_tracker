@@ -14,31 +14,41 @@ class GetBudgetsMetadataState extends Equatable {
     required this.status,
     this.allBudgetsMetadata = const [],
     this.messageKey = '',
+    this.viewedBudgetKey,
   });
   final List<BudgetMetadata> allBudgetsMetadata;
   final GetBudgetsMetadataStateStatus status;
   final String messageKey;
+  final String? viewedBudgetKey;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         allBudgetsMetadata,
         status,
         messageKey,
+        viewedBudgetKey,
       ];
 
-  GetBudgetsMetadataState copyWith(
-      {List<BudgetMetadata>? allBudgetsMetadata,
-      GetBudgetsMetadataStateStatus? status,
-      String? messageKey}) {
+  GetBudgetsMetadataState copyWith({
+    List<BudgetMetadata>? allBudgetsMetadata,
+    GetBudgetsMetadataStateStatus? status,
+    String? messageKey,
+    String? viewedBudgetKey,
+  }) {
     return GetBudgetsMetadataState(
       status: status ?? this.status,
-      allBudgetsMetadata: allBudgetsMetadata ?? [],
+      allBudgetsMetadata: allBudgetsMetadata ?? this.allBudgetsMetadata,
       messageKey: messageKey ?? '',
+      viewedBudgetKey: viewedBudgetKey ?? this.viewedBudgetKey,
     );
   }
+
+  @override
+  bool get stringify => true;
 }
 
 extension GetBudgetsMetadataStateExt on GetBudgetsMetadataState {
+  bool get hasViewedBudgetKey => viewedBudgetKey != null;
   bool get isLoading => status == GetBudgetsMetadataStateStatus.loading;
   bool get isFailed => status == GetBudgetsMetadataStateStatus.failed;
   bool get isCompletedWithNoBudgets =>

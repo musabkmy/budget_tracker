@@ -17,6 +17,7 @@ extension CupertinoThemeDataExt on CupertinoThemeData {
   CupertinoDynamicColor get contrastShadeColor =>
       AppColors().contrastShadeColor;
   CupertinoDynamicColor get budgetColor => AppColors().budgetDefaultColor;
+  CupertinoDynamicColor get budgetAccentColor => AppColors().budgetAccentColor;
   CupertinoDynamicColor get partialTransparentColor =>
       AppColors().partialTransparentColor;
 }

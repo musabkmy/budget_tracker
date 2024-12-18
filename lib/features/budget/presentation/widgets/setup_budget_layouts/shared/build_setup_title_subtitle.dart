@@ -21,7 +21,7 @@ class BuildSetupTitleSubtitle extends StatelessWidget {
       padding: withTopPadding
           ? EdgeInsets.fromLTRB(
               aSpPadding8, aSpPadding24, aSpPadding8, aSpPadding48)
-          : EdgeInsets.only(bottom: aSpPadding48),
+          : EdgeInsets.only(bottom: aSpPadding32),
       child: Text.rich(
         TextSpan(
             text: title ?? info.title,

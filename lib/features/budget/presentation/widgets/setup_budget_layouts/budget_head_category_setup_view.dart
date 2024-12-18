@@ -10,9 +10,9 @@ import 'package:budget_tracker/features/budget/data/models/budget_head_categorie
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_info.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/build_bottom_field_description.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/build_budget_category_setup_layout.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/build_setup_title_subtitle.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_bottom_field_description.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/build_budget_category_setup_layout.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_setup_title_subtitle.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -123,6 +123,7 @@ class _BudgetHeadCategorySetupViewState
 
       //save changes if there is change may be occurred
       if (context.read<EditingNumericFieldProvider>().isInit) {
+        debugPrint('bh category to ModifyBudgetCategoryPlannedBalance blo');
         context.read<CreateBudgetBloc>().add(ModifyBudgetCategoryPlannedBalance(
             headCategoryId: _headCategoryId!,
             categoryId: _keyHasFocusNode!,

@@ -120,12 +120,12 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
   }
 
   void _changeBudgetNameAndPeriod(
-      ChangeBudgetNameAndPeriod event, Emitter<CreateBudgetState> emit) {
+      ChangeBudgetNameAndPeriod event, Emitter<CreateBudgetState> emit) async {
     final stateModifiable = state.createBudgetStatus;
     if (stateModifiable is CreateBudgetStatusModifiable) {
       if ((event.name != stateModifiable.budget.name) ||
           (event.budgetPeriod != stateModifiable.budget.budgetPeriod)) {
-        final newBudget = stateModifiable.budget.copyWith(
+        final updateBudget = stateModifiable.budget.copyWith(
           name: event.name,
           budgetPeriod: event.budgetPeriod,
         );
@@ -137,15 +137,25 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
               .getHeadCategoryCategoriesInitPlannedBalance(
                   state.currentSetupLayoutInfo.nexHeadCategoryIndex),
         );
-        emit(
-          state.copyWith(
-              newCreateBudgetStatus: CreateBudgetStatusModifiable(newBudget),
-              currentSetupLayoutInfo: nextSetupLayout),
-        );
-        debugPrint(
-            'name: ${(state.createBudgetStatus as CreateBudgetStatusModifiable).budget.name}\nbudget period: ${(state.createBudgetStatus as CreateBudgetStatusModifiable).budget.budgetPeriod.toString()}');
-        debugPrint(
-            'next page: ${state.currentSetupLayoutInfo.layoutType}\nheadBudgetIndex: ${state.currentSetupLayoutInfo.headBudgetIndex}');
+        final updateResult = await _budgetRepository.updateBudget(
+            key: stateModifiable.budget.id, updateBudget: updateBudget);
+        if (updateResult is DataSuccess) {
+          final budgetFromHive =
+              await _budgetRepository.getBudget(key: updateResult.data!);
+          debugPrint(
+              'budgetFromHive data in change name and period: ${budgetFromHive.data.toString()}');
+
+          emit(
+            state.copyWith(
+                newCreateBudgetStatus:
+                    CreateBudgetStatusModifiable(updateBudget),
+                currentSetupLayoutInfo: nextSetupLayout),
+          );
+          debugPrint(
+              'name: ${(state.createBudgetStatus as CreateBudgetStatusModifiable).budget.name}\nbudget period: ${(state.createBudgetStatus as CreateBudgetStatusModifiable).budget.budgetPeriod.toString()}');
+          debugPrint(
+              'next page: ${state.currentSetupLayoutInfo.layoutType}\nheadBudgetIndex: ${state.currentSetupLayoutInfo.headBudgetIndex}');
+        }
       } else {
         //start modifying head categories
         final nextSetupLayout = state.currentSetupLayoutInfo.copyWith(
@@ -156,6 +166,8 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
                   state.currentSetupLayoutInfo.nexHeadCategoryIndex),
         );
         emit(state.copyWith(currentSetupLayoutInfo: nextSetupLayout));
+        debugPrint(
+            'next page: ${state.currentSetupLayoutInfo.layoutType}\nheadBudgetIndex: ${state.currentSetupLayoutInfo.headBudgetIndex}');
         debugPrint(
             'next page: ${state.currentSetupLayoutInfo.layoutType}\nheadBudgetIndex: ${state.currentSetupLayoutInfo.headBudgetIndex}');
       }
@@ -194,11 +206,11 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
             final updateResult = await _budgetRepository.updateBudget(
                 key: stateModifiable.budget.id, updateBudget: updateBudget);
             if (updateResult is DataSuccess) {
-              debugPrint(
-                  'bloc, Update planned balance: ${updateBudget.toString()}');
               emit(state.copyWith(
                   newCreateBudgetStatus:
                       CreateBudgetStatusModifiable(updateBudget)));
+              debugPrint(
+                  'bloc, Update planned balance: ${(state.createBudgetStatus as CreateBudgetStatusModifiable).budget.toString()}');
             }
           }
         } else if (getResult is DataFailed) {

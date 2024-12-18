@@ -1,18 +1,12 @@
-import 'package:budget_tracker/config/theme/app_theme.dart';
-import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
-import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
-import 'package:budget_tracker/features/budget/data/models/budget_head_categories.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/build_bottom_field_description.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/build_state.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_views/shared/flexible_dots.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_bottom_field_description.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,7 +51,6 @@ class TotalPlannedExpensesLayout extends StatelessWidget {
                     children: [
                       //actual stats
                       BuildStats(
-                        currentSetupLayoutInfo: state.currentSetupLayoutInfo,
                         headCategories: headCategories,
                         totalIncomeAndPlannedExpenses: stateModifiable.budget
                             .getIncomeAndPlannedExpenses(),

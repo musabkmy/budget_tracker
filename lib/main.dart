@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:budget_tracker/core/settings/app_block_observer.dart';
+import 'package:budget_tracker/core/settings/app_bloc_observer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +15,7 @@ void main() async {
   // Lock the status bar style for the entire app
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      statusBarColor: CupertinoColors.systemRed, // Transparent background
+      statusBarColor: CupertinoColors.transparent, // Transparent background
       statusBarIconBrightness: Brightness.dark, // Dark icons
     ),
   );

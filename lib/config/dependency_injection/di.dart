@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:budget_tracker/core/settings/shared_preferences_service.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
 
@@ -8,36 +9,36 @@ import 'di_ex.dart';
 GetIt di = GetIt.instance;
 
 Future<void> setupDi() async {
-  // /// Helper
+  // // Helper
   // di.registerSingleton(InternetConnectionHelper());
 
-  /// Hive DataBase
+  // Hive DataBase
   await Hive.initFlutter();
 
   registerAdapters();
 
-  /// DB Services
+  // DB Services
   // Budget DataBase Service
   di.registerSingleton(BudgetDataBaseService());
   await di<BudgetDataBaseService>().initDataBase();
 
-  // /// Api Providers
+  // // Api Providers
   // di.registerSingleton(CategoriesApiProvider(di<Dio>()));
 
-  /// DataBase Providers
+  // DataBase Providers
   // Categories
   di.registerSingleton(BudgetDataBaseProvider(
     budgetDataBaseService: di<BudgetDataBaseService>(),
   ));
 
-  /// Repository
+  // Repository
   // Budget
   di.registerSingleton(BudgetRepository(
     di<BudgetDataBaseProvider>(),
   ));
 
-  /// Blocs
-  /// get all budgets metadata
+  // Blocs
+  // get all budgets metadata
   di.registerSingleton<GetBudgetsMetadataBloc>(
       GetBudgetsMetadataBloc(di<BudgetRepository>()));
   // Create a Budget
@@ -46,18 +47,24 @@ Future<void> setupDi() async {
   // get specific budget
   di.registerSingleton<GetBudgetBloc>(GetBudgetBloc(di<BudgetRepository>()));
 
-  /// Providers
+  // Providers
   di.registerLazySingleton<CreateBudgetPopupAppearanceProvider>(
       () => CreateBudgetPopupAppearanceProvider());
   di.registerLazySingleton<EditingNumericFieldProvider>(
       () => EditingNumericFieldProvider());
+
+  //shared preferences
+  // Register the SharedPreferencesService
+  final sharedPreferencesService = SharedPreferencesService();
+  await sharedPreferencesService.init(); // Initialize SharedPreferences
+  di.registerSingleton<SharedPreferencesService>(sharedPreferencesService);
 }
 
 Future<Directory> testSetupDi() async {
-  // /// Helper
+  // // Helper
   // di.registerSingleton(InternetConnectionHelper());
 
-  /// Hive DataBase
+  // Hive DataBase
   // final testDir = Directory.systemTemp.createTempSync();
   final testDir = Directory(
       '/Users/nasracentre/Musab/Projects/budget_tracker/test/data_data');
@@ -68,27 +75,27 @@ Future<Directory> testSetupDi() async {
 
   registerAdapters();
 
-  /// DB Services
+  // DB Services
   // Budget DataBase Service
   di.registerSingleton<BudgetDataBaseService>(BudgetDataBaseService());
   await di<BudgetDataBaseService>().initDataBase();
 
-  // /// Api Providers
+  // // Api Providers
   // di.registerSingleton(CategoriesApiProvider(di<Dio>()));
 
-  /// DataBase Providers
+  // DataBase Providers
   // Categories
   di.registerSingleton<BudgetDataBaseProvider>(BudgetDataBaseProvider(
     budgetDataBaseService: di<BudgetDataBaseService>(),
   ));
 
-  // /// Repository
+  // // Repository
   // Budget
   di.registerSingleton<BudgetRepository>(BudgetRepository(
     di<BudgetDataBaseProvider>(),
   ));
 
-  // /// Blocs
+  // // Blocs
   // Budget
   di.registerSingleton<CreateBudgetBloc>(
       CreateBudgetBloc(di<BudgetRepository>()));
