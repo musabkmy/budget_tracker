@@ -1,7 +1,7 @@
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
-import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/show_app_bottom_sheet.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/show_create_budget_setup_bottom_sheet.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +45,10 @@ class BuildActions extends StatelessWidget {
                     context.read<GetBudgetsMetadataBloc>();
 
                 createBudgetBloc.add(CreateDefaultBudget());
-                showCustomCupertinoBottomSheet(
+                if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
+                showCreateBudgetSetupBottomSheet(
                     context, createBudgetBloc, getBudgetsMetadataBloc);
               }),
           AppTextButton(text: appLocalizations.skipSetup, onPressed: () {}),

@@ -5,7 +5,7 @@ import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/core/widgets/app_sliver_navigation.dart';
 import 'package:budget_tracker/core/widgets/app_sliver_tab.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
-import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
+import 'package:budget_tracker/features/budget/presentation/widgets/view_budget_layouts/show_create_new_budget_bottom_sheet.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,13 +82,10 @@ class _BuildSelectedBudgetButton extends StatelessWidget {
       width: context.width * .6,
       child: AppTextButton(
         onPressed: () {
-          context.read<GetBudgetsMetadataBloc>().add(
-              ChangeViewedBudgetKey('f86b5347-af1f-4508-9624-66bdf1b100b3'));
-          // showCustomCupertinoBottomSheet(context,
-          //     child: Container(
-          //         height: context.heigh * .8,
-          //         color: CupertinoTheme.of(context).scaffoldBackgroundColor,
-          //         child: StartCreatingBudget()));
+          //   context.read<GetBudgetsMetadataBloc>().add(
+          //       ChangeViewedBudgetKey('f86b5347-af1f-4508-9624-66bdf1b100b3'));
+
+          showCreateNewBudgetBottomSheet(context);
         },
         withoutPadding: true,
         child: RichText(

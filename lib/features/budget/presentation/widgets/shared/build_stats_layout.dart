@@ -105,10 +105,10 @@ class _BuildTotalPlanningLayout extends StatelessWidget {
             ),
           )
         : Container(
-            height: context.heigh * .1,
+            height: context.heigh * .12,
             alignment: Alignment.topCenter,
             padding: EdgeInsets.symmetric(horizontal: aSpPadding24),
-            margin: EdgeInsets.only(bottom: aSpPadding48),
+            margin: EdgeInsets.only(bottom: aSpPadding32),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -196,14 +196,13 @@ class _BuildPieChartLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final totalIncome = totalIncomeAndPlannedExpenses.$1;
+    final totalExpenses = totalIncomeAndPlannedExpenses.$2;
     return PieChart(PieChartData(
       centerSpaceRadius: 38,
       sectionsSpace: 0,
       sections: headCategories
-          .skip(totalIncomeAndPlannedExpenses.$2 >=
-                  totalIncomeAndPlannedExpenses.$1
-              ? 1
-              : 0)
+          .skip(totalIncome != 0 && totalExpenses >= totalIncome ? 1 : 0)
           .toList()
           .asMap()
           .entries

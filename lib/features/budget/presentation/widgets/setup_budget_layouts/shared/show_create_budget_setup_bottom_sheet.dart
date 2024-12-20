@@ -3,7 +3,7 @@ import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_met
 import 'package:budget_tracker/features/budget/presentation/page/create_budget_setup.dart';
 import 'package:flutter/cupertino.dart';
 
-void showCustomCupertinoBottomSheet(
+void showCreateBudgetSetupBottomSheet(
     BuildContext context,
     CreateBudgetBloc createBudgetBloc,
     GetBudgetsMetadataBloc getBudgetsMetadataBloc) async {

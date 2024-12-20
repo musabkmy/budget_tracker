@@ -1,5 +1,3 @@
-import 'package:budget_tracker/config/dependency_injection/di.dart';
-import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/page/view_budget.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/start_creating_budget.dart';
