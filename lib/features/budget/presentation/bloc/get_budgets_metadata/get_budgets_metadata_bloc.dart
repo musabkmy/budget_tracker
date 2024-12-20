@@ -24,16 +24,17 @@ class GetBudgetsMetadataBloc
   Future<void> _getAllBudgetsMetadata(
       GetBudgetsMetaData event, Emitter<GetBudgetsMetadataState> emit) async {
     try {
-      final dynamic result = await _budgetRepository.getBudgetsMetadata();
+      final result = await _budgetRepository.getBudgetsMetadata();
 
       if (result is DataSuccess) {
         debugPrint('data retried: ${result.data!.toString()}');
         final viewedBudgetKey = await _getViewedBudgetKey();
-
+        final dataResult = result.data!;
         emit(state.copyWith(
           status: GetBudgetsMetadataStateStatus.completed,
-          allBudgetsMetadata: result.data,
-          viewedBudgetKey: viewedBudgetKey ?? result.data.first.key,
+          allBudgetsMetadata: dataResult,
+          viewedBudgetKey: viewedBudgetKey ??
+              (dataResult.isNotEmpty ? dataResult.first.key : null),
         ));
       } else if (result is DataFailed) {
         emit(state.copyWith(
@@ -41,6 +42,7 @@ class GetBudgetsMetadataBloc
         ));
       }
     } catch (e) {
+      debugPrint('error at get budget: ${e.toString()}');
       emit(state.copyWith(status: GetBudgetsMetadataStateStatus.failed));
     }
   }

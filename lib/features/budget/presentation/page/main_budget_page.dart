@@ -23,6 +23,8 @@ class _MainBudgetPageState extends State<MainBudgetPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<GetBudgetsMetadataBloc, GetBudgetsMetadataState>(
       builder: (context, state) {
+        debugPrint(
+            'state.allBudgetsMetadata: ${state.allBudgetsMetadata}\nstate.status: ${state.status}');
         // return StartCreatingBudget();
         return state.isLoading
             ? CupertinoActivityIndicator()
