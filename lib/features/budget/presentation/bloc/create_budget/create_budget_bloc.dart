@@ -11,6 +11,7 @@ import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/c
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_info.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
 import 'package:budget_tracker/features/budget/repository/budget_repository.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +28,14 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
             createBudgetStatus: CreateBudgetStatusInit(),
             currentSetupLayoutInfo: BudgetSetupLayoutsInfo())) {
     on<CreateDefaultBudget>(_createNewBudget);
-    on<ModifyCreatedBudget>(_updateCreatedBudget);
+    // on<ModifyCreatedBudget>(_updateCreatedBudget);
     on<ChangeBudgetNameAndPeriod>(_changeBudgetNameAndPeriod);
     on<ToPreviousSetupLayout>(_toPreviousSetupLayout);
     on<ModifyBudgetCategoryPlannedBalance>(_modifyBudgetCategoryPlannedBalance);
     on<NextBudgetHeadCategory>(_afterBudgetHeadCategory);
     on<FromStatsToNextHeadCategory>(_fromStatsToNextHeadCategory);
+    on<FinishModifyingBudget>(_finishModifyingBudget);
+    on<ResetStateEvent>(_resetStateEvent);
   }
 
   Future<void> _createNewBudget(
@@ -277,23 +280,28 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
     }
   }
 
-  Future<void> _updateCreatedBudget(
-      ModifyCreatedBudget event, Emitter<CreateBudgetState> emit) async {
+  Future<void> _finishModifyingBudget(
+      FinishModifyingBudget event, Emitter<CreateBudgetState> emit) async {
     try {
       final stateModifiable = state.createBudgetStatus;
       if (stateModifiable is CreateBudgetStatusModifiable) {
+        final updateBudget = stateModifiable.budget;
+        final budgetPeriodInDays = updateBudget.budgetPeriod.periodInDays;
+        updateBudget.allTransactionsInDayNumber = {
+          for (int day = 0; day < budgetPeriodInDays; day++) day: []
+        };
+        updateBudget.endDate =
+            updateBudget.startDate.add(Duration(days: budgetPeriodInDays - 1));
+
+        updateBudget.numberOfTransactions = 0;
         final DataState<String> result = await _budgetRepository.updateBudget(
-            key: stateModifiable.budget.id,
-            updateBudget: stateModifiable.budget);
-        if (result is DataSuccess && result.data is Budget) {
-          emit(state.copyWith(
-              newCreateBudgetStatus: CreateBudgetStatusSuccess(result.data!)));
-          debugPrint('added: ${result.data}');
+            key: updateBudget.id, updateBudget: updateBudget);
+        if (result is DataSuccess) {
+          debugPrint(
+              'finish modifying: ${updateBudget.allTransactionsInDayNumber.toString()}');
         } else if (result is DataFailed) {
-          debugPrint('in bloc: ${result.errorKey.toString()}');
-          emit(state.copyWith(
-              newCreateBudgetStatus: CreateBudgetStatusFailure('errorMsg')));
-          debugPrint('in bloc: ${stateModifiable.toString()}');
+          debugPrint(
+              'failed in finish modifying: ${result.errorKey.toString()}');
         }
       } else {
         emit(state.copyWith(
@@ -303,6 +311,15 @@ class CreateBudgetBloc extends Bloc<CreateBudgetEvent, CreateBudgetState> {
       emit(state.copyWith(
           newCreateBudgetStatus: CreateBudgetStatusFailure('errorMsg')));
     }
+  }
+
+  Future<void> _resetStateEvent(
+      ResetStateEvent event, Emitter<CreateBudgetState> emit) async {
+    await Future.delayed(Duration(seconds: 1));
+    emit(CreateBudgetState(
+        createBudgetStatus: CreateBudgetStatusInit(),
+        currentSetupLayoutInfo: BudgetSetupLayoutsInfo()));
+    debugPrint('finish status: ${state.toString()}');
   }
 
   @override

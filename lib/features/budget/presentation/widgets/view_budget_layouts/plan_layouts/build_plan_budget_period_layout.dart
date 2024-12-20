@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BuildBudgetPeriodLayout extends StatelessWidget {
-  const BuildBudgetPeriodLayout({super.key});
+class BuildPlanBudgetPeriodLayout extends StatelessWidget {
+  const BuildPlanBudgetPeriodLayout({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -70,6 +70,8 @@
   "@totalPlannedExpenses": {},
   "continueLabel":"Continue",
   "@continueLabel": {},
+  "okLabel":"Ok",
+  "@okLabel": {},
   "nameLabel":"Name",
   "@nameLabel": {},
   "budgetPeriodLabel":"Budget period",

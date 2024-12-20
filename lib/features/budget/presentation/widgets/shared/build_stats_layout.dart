@@ -3,6 +3,7 @@ import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_head_categories.dart';
+import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/flexible_dots.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,11 +12,13 @@ import 'package:flutter/cupertino.dart';
 class BuildStatsLayout extends StatelessWidget {
   const BuildStatsLayout({
     super.key,
+    this.currentSetupLayoutInfo,
     required this.headCategories,
     required this.totalIncomeAndPlannedExpenses,
     this.fromViewBudget = false,
     this.shrinkWrap = false,
   });
+  final BudgetSetupLayoutsInfo? currentSetupLayoutInfo;
   final List<BudgetHeadCategory> headCategories;
   final (double, double) totalIncomeAndPlannedExpenses;
   final bool fromViewBudget;
@@ -28,17 +31,18 @@ class BuildStatsLayout extends StatelessWidget {
         shrinkWrap: shrinkWrap,
         padding: EdgeInsets.only(top: fromViewBudget ? 0 : aSpPadding24),
         children: _buildStatsLayout(context, appLocalizations, fromViewBudget,
-            headCategories, totalIncomeAndPlannedExpenses));
+            headCategories, totalIncomeAndPlannedExpenses,
+            currentSetupLayoutInfo: currentSetupLayoutInfo));
   }
 }
 
 List<Widget> _buildStatsLayout(
-  BuildContext context,
-  AppLocalizations appLocalizations,
-  bool fromViewBudget,
-  List<BudgetHeadCategory> headCategories,
-  (double, double) totalIncomeAndPlannedExpenses,
-) {
+    BuildContext context,
+    AppLocalizations appLocalizations,
+    bool fromViewBudget,
+    List<BudgetHeadCategory> headCategories,
+    (double, double) totalIncomeAndPlannedExpenses,
+    {BudgetSetupLayoutsInfo? currentSetupLayoutInfo}) {
   return <Widget>[
         _BuildTotalPlanningLayout(
           headCategories: headCategories,
@@ -67,7 +71,9 @@ List<Widget> _buildStatsLayout(
                         .budgetAccentColor
                         .withOpacity(1 - (element.key * (2 / 10)))
                     : element.value.headCategoryColor,
-                isHeadCategoryViewed: true,
+                isHeadCategoryViewed: currentSetupLayoutInfo != null
+                    ? element.key <= currentSetupLayoutInfo.headBudgetIndex!
+                    : true,
               );
       }).toList();
 }

@@ -44,6 +44,10 @@ class FromStatsToNextHeadCategory extends CreateBudgetEvent {
   const FromStatsToNextHeadCategory();
 }
 
-class ModifyCreatedBudget extends CreateBudgetEvent {
-  const ModifyCreatedBudget();
+class FinishModifyingBudget extends CreateBudgetEvent {
+  const FinishModifyingBudget();
+}
+
+class ResetStateEvent extends CreateBudgetEvent {
+  const ResetStateEvent();
 }

@@ -69,7 +69,7 @@ class Budget extends HiveObject {
     this.totalPlannedExpenses = 0,
     this.totalCurrentBalance = 0,
   });
-  //TODO: ensure modifying endDate, allTransactionsInDayNumber and numberOfTransactions
+  //ensure modifying endDate, allTransactionsInDayNumber and numberOfTransactions
 
   // endDate = startDate.add(Duration(days: budgetPeriod.periodInDays - 1)),
   // allTransactionsInDayNumber = {
@@ -79,7 +79,7 @@ class Budget extends HiveObject {
 
   @override
   String toString() {
-    return 'Budget(id: $id, name: $name, budgetPeriod: $budgetPeriod, headCategories: $headCategories, categories: $categories, totalPlannedExpenses: $totalPlannedExpenses, totalCurrentBalance: $totalCurrentBalance, startDate: $startDate, endDate: $endDate, allTransactionsInDayNumber: $allTransactionsInDayNumber, numberOfTransactions: $numberOfTransactions, allBudgetBreakdown: $allBudgetBreakdown)';
+    return 'Budget(id: $id, name: $name, budgetPeriod: $budgetPeriod, headCategories: $headCategories, categories: $categories, totalPlannedExpenses: $totalPlannedExpenses, totalCurrentBalance: $totalCurrentBalance, startDate: $startDate, endDate: $endDate, allTransactionsInDayNumber: $allTransactionsInDayNumber, numberOfTransactions: $numberOfTransactions)';
   }
 
   @override
@@ -167,7 +167,7 @@ extension BudgetExt on Budget {
       for (var element in categories.values) {
         debugPrint(
             'getHeadCategoryTotalPlannedBalance: ${element.headCategoryId}');
-        if (element.headCategoryId == headCategoryId) {
+        if (element.headCategoryId == headCategoryId && !element.isSaving) {
           debugPrint('getHeadCategoryTotalPlannedBalance: ${element.id}');
           sum += element.plannedBalance;
         }
@@ -200,8 +200,10 @@ extension BudgetExt on Budget {
       final headCategory = headCategories.values.toList().elementAt(index);
       final categoriesId = getCategoriesId(headCategory.id);
       for (var key in categoriesId) {
-        result.addEntries(
-            <String, double>{key: categories[key]!.plannedBalance}.entries);
+        if (!categories[key]!.isSaving) {
+          result.addEntries(
+              <String, double>{key: categories[key]!.plannedBalance}.entries);
+        }
       }
       debugPrint('getHeadCategoryCategoriesInitPlannedBalance: $result');
       return result;

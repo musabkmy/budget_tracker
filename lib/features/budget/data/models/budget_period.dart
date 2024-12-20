@@ -36,7 +36,7 @@ class BudgetPeriod extends HiveObject {
   static final BudgetPeriod biMonth =
       BudgetPeriod._(BudgetPeriodType.biMonth, 'Bi-Month', 60);
   static final BudgetPeriod year =
-      BudgetPeriod._(BudgetPeriodType.year, 'Yearly', 260);
+      BudgetPeriod._(BudgetPeriodType.year, 'Yearly', 360);
 
   //get all available instances
   static List<BudgetPeriod> get allBudgetPeriods =>

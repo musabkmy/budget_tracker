@@ -51,6 +51,7 @@ class TotalPlannedExpensesLayout extends StatelessWidget {
                     children: [
                       //actual stats
                       BuildStats(
+                        currentSetupLayoutInfo: state.currentSetupLayoutInfo,
                         headCategories: headCategories,
                         totalIncomeAndPlannedExpenses: stateModifiable.budget
                             .getIncomeAndPlannedExpenses(),

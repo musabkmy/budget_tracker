@@ -3,11 +3,9 @@ import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
-import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
-import 'package:budget_tracker/features/budget/presentation/page/budget_page.dart';
+import 'package:budget_tracker/features/budget/presentation/page/main_budget_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -47,8 +45,6 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<CreateBudgetPopupAppearanceProvider>(
               create: (_) => di<CreateBudgetPopupAppearanceProvider>()),
-          ChangeNotifierProvider<EditingNumericFieldProvider>(
-              create: (_) => di<EditingNumericFieldProvider>()),
         ],
         child: ScreenUtilInit(
           // designSize: const Size(360, 690),
@@ -66,7 +62,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme:
                 appTheme(brightness: MediaQuery.of(context).platformBrightness),
-            home: BudgetPage(),
+            home: MainBudgetPage(),
           ),
         ),
       ),

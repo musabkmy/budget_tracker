@@ -1,7 +1,9 @@
+import 'package:budget_tracker/config/dependency_injection/di.dart';
 import 'package:budget_tracker/config/theme/app_icons.dart';
 import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
+import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';
@@ -23,14 +25,17 @@ class CreateBudgetSetup extends StatelessWidget {
   Widget build(BuildContext context) {
     final appearanceProvider =
         Provider.of<CreateBudgetPopupAppearanceProvider>(context);
-    return Container(
-      height: context.heigh * 0.9,
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(aSpPadding12)),
-        color: appearanceProvider.popupBackgroundColor,
+    return ChangeNotifierProvider<EditingNumericFieldProvider>(
+      create: (_) => di<EditingNumericFieldProvider>(),
+      child: Container(
+        height: context.heigh * 0.9,
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(aSpPadding12)),
+          color: appearanceProvider.popupBackgroundColor,
+        ),
+        child: BuildSetupLayout(),
       ),
-      child: BuildSetupLayout(),
     );
   }
 }

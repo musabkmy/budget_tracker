@@ -50,10 +50,12 @@ class FinishSetupView extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: AppFilledButton(
-                      text: appLocalizations.continueLabel,
+                      text: appLocalizations.okLabel,
                       onPressed: () {
-                        //TODO: save the budget in perment place
-                        Navigator.pop(context);
+                        context
+                            .read<CreateBudgetBloc>()
+                            .add(FinishModifyingBudget());
+                        Navigator.pop(context, stateModifiable.budget.id);
                       }),
                 ),
               ],

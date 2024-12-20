@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:budget_tracker/core/providers/focus_nodes_manager_provider.dart';
 import 'package:budget_tracker/core/settings/shared_preferences_service.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
@@ -52,6 +53,8 @@ Future<void> setupDi() async {
       () => CreateBudgetPopupAppearanceProvider());
   di.registerLazySingleton<EditingNumericFieldProvider>(
       () => EditingNumericFieldProvider());
+  di.registerLazySingleton<FocusNodesManagerProvider>(
+      () => FocusNodesManagerProvider());
 
   //shared preferences
   // Register the SharedPreferencesService

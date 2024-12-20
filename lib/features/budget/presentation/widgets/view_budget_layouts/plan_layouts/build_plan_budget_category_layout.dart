@@ -1,6 +1,7 @@
 import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/widgets/app_divider.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/core/utils/extensions.dart';
@@ -11,11 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class BuildBudgetCategorySetupLayout extends StatelessWidget {
+class BuildPlanBudgetCategoryLayout extends StatelessWidget {
   final BudgetCategory budgetCategory;
   final FocusNode focusNode;
   // final TextEditingController textEditingController;
-  const BuildBudgetCategorySetupLayout({
+  const BuildPlanBudgetCategoryLayout({
     super.key,
     required this.budgetCategory,
     // required this.textEditingController,
@@ -37,8 +38,7 @@ class BuildBudgetCategorySetupLayout extends StatelessWidget {
                   ? CupertinoTheme.of(context).barBackgroundColor
                   : appearanceProvider.popupBackgroundColor,
               borderRadius: aPriceButtonRadius),
-          padding: EdgeInsets.symmetric(
-              horizontal: aSpPadding16, vertical: aSpPadding12),
+          padding: EdgeInsets.symmetric(vertical: aSpPadding12),
           child: CupertinoTextField(
             focusNode: focusNode,
             onTap: () {
@@ -67,21 +67,12 @@ class BuildBudgetCategorySetupLayout extends StatelessWidget {
                 budgetCategory: budgetCategory),
           ),
         ),
-        _buildDivider(appearanceProvider, context)
+        AppDivider(
+            hasFocus: appearanceProvider.fieldKey == budgetCategory.id,
+            hasFocusColor: appearanceProvider.popupBackgroundColor,
+            indent: 0,
+            endIndent: 0)
       ],
-    );
-  }
-
-  Divider _buildDivider(CreateBudgetPopupAppearanceProvider appearanceProvider,
-      BuildContext context) {
-    return Divider(
-      indent: aSpPadding16,
-      endIndent: aSpPadding16,
-      height: 1.0,
-      thickness: 1.0,
-      color: appearanceProvider.fieldKey == budgetCategory.id
-          ? appearanceProvider.popupBackgroundColor
-          : CupertinoTheme.of(context).neutralShadeColor,
     );
   }
 }

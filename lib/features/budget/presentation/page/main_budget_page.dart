@@ -1,17 +1,19 @@
+import 'package:budget_tracker/config/dependency_injection/di.dart';
+import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budgets_metadata/get_budgets_metadata_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/page/view_budget.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/start_creating_budget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BudgetPage extends StatefulWidget {
-  const BudgetPage({super.key});
+class MainBudgetPage extends StatefulWidget {
+  const MainBudgetPage({super.key});
 
   @override
-  State<BudgetPage> createState() => _BudgetPageState();
+  State<MainBudgetPage> createState() => _MainBudgetPageState();
 }
 
-class _BudgetPageState extends State<BudgetPage> {
+class _MainBudgetPageState extends State<MainBudgetPage> {
   late Widget layoutToBuild;
   @override
   void initState() {
