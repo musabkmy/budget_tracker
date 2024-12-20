@@ -1,10 +1,29 @@
-import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
+import 'package:budget_tracker/core/settings/app_bloc_observer.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'src/app.dart';
-import 'src/settings/settings_controller.dart';
-import 'src/settings/settings_service.dart';
+import 'app.dart';
+import 'config/dependency_injection/di.dart';
+import 'core/settings/settings_controller.dart';
+import 'core/settings/settings_service.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Lock the status bar style for the entire app
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: CupertinoColors.transparent, // Transparent background
+      statusBarIconBrightness: Brightness.dark, // Dark icons
+    ),
+  );
+  await ScreenUtil.ensureScreenSize();
+
+  /// waiting to inject the application dependencies
+  await setupDi();
+
   // Set up the SettingsController, which will glue user settings to multiple
   // Flutter Widgets.
   final settingsController = SettingsController(SettingsService());
@@ -13,8 +32,17 @@ void main() async {
   // This prevents a sudden theme change when the app is first displayed.
   await settingsController.loadSettings();
 
+  //Listen to all blocs changes
+  Bloc.observer = const AppBlocObserver();
+
   // Run the app and pass in the SettingsController. The app listens to the
   // SettingsController for changes, then passes it further down to the
   // SettingsView.
-  runApp(MyApp(settingsController: settingsController));
+  runApp(
+      // Builder(builder: (context) {
+      // Initialize localization service
+      // LocalizationService.initialize(AppLocalizations.of(context)!);
+      MyApp()
+      // })
+      );
 }

@@ -1,0 +1,101 @@
+{
+  "@@locale": "en",
+  "appTitle": "budget_tracker",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "databaseException": "Internal Error",
+  "@databaseException": {},
+  "insertFailureException": "Failed to insert {item}.",
+  "@insertFailureException": {
+    "placeholders": {
+      "item":{
+        "type": "String"
+      }
+    }
+  },
+  "itemNotFoundException" : "Could not find this {item}.",
+  "@itemNotFoundException": {
+    "placeholders": {
+      "item":{
+        "type": "String"
+      }
+    }
+  },
+  "badRequest": "Bad request.",
+  "@badRequest": {},
+  "unknownError": "An unknown error occurred.",
+  "@unknownError": {},
+  "overview":"Overview",
+  "@overview": {},
+  "budget":"Budget",
+  "@budget": {},
+  "wallet":"Wallet",
+  "@wallet": {},
+  "setupYourFirstBudget": "Setup your first budget 💰",
+  "@setupYourFirstBudget": {},
+  "setupYourFirstBudgetMsg":"We'll guide you through the steps of setting up your personalised household budget",
+  "@setupYourFirstBudgetMsg": {},
+  "getStarted":"Get started",
+  "@getStarted": {},
+  "skipSetup": "Skip setup",
+  "@skipSetup": {},
+  "startTitle" : "Start with the basics",
+  "@startTitle":{},
+  "startDescription" : "We recommend using the same budget period as your regular income.",
+  "@startDescription":{},
+  "incomeDescription" : "Your regular income will be the amount you have to budget for. feel free to make an estimation as you can update this later.",
+  "@incomeDescription":{},
+  "incomeAdditionDescription":"If you want to budget using only expenses, then go ahead and skip this step.",
+  "@incomeAdditionDescription": {},
+  "housingDescription" : "These expenses should be fairly regular from period to period.",
+  "@housingDescription":{},
+  "foodDescription" : "Your food costs can fluctuate a lot - a fair estimation is good enough here.",
+  "@foodDescription":{},
+  "foodNextUp" : "Food and consumable are usually our highest variable expenses, it's also the area where we can improve the most.",
+  "@foodNextUp":{},
+  "lifestyleDescription" : "Finish up budgeting your expenses with your lifestyle spendings.",
+  "@lifestyleDescription":{},
+  "lifestyleNextUp":"From entertainment to healthcare, we all need it, and should plan for it as well.",
+  "@lifestyleNextUp":{},
+  "savingsDescription" : "How much would you like to put away in savings each period?",
+  "@savingsDescription":{},
+  "savingsNextUp":"We recommend that you save roughly 10% of your salary.",
+  "@savingsNextUp":{},
+  "finishTitle" : "You're all set up!",
+  "@finishTitle":{},
+  "finishDescription" : "Great job! Remember, you can edit anything you're just entered and add a new categories after on.",
+  "@finishDescription":{},
+  "totalPlannedExpenses":"Total planned expenses",
+  "@totalPlannedExpenses": {},
+  "continueLabel":"Continue",
+  "@continueLabel": {},
+  "okLabel":"Ok",
+  "@okLabel": {},
+  "nameLabel":"Name",
+  "@nameLabel": {},
+  "budgetPeriodLabel":"Budget period",
+  "@budgetPeriodLabel": {},
+  "amountLabel":"Amount",
+  "@amountLabel": {},
+  "nextUpHeadCategoryLabel": "Next up - {headCategory}",
+  "@nextUpHeadCategoryLabel": {
+    "placeholders": {
+      "headCategory":{
+        "type": "String"
+      }
+    }
+  },
+  "planLabel": "Plan",
+  "@planLabel": {},
+  "remainingLabel": "remaining",
+  "@remainingLabel": {},
+  "insightsLabel": "insights",
+  "@insightsLabel": {},
+  "leftOfIncomeLabel":"left of income",
+  "@leftOfIncomeLabel": {},
+  "plannedExpensesLabel":"Planned Expenses",
+  "@plannedExpensesLabel": {},
+  "overIncomeLabel":"over income",
+  "@overIncomeLabel": {}
+}
