@@ -200,7 +200,7 @@ extension BudgetExt on Budget {
       final headCategory = headCategories.values.toList().elementAt(index);
       final categoriesId = getCategoriesId(headCategory.id);
       for (var key in categoriesId) {
-        if (!categories[key]!.isSaving) {
+        if (categories.containsKey(key) && !categories[key]!.isSaving) {
           result.addEntries(
               <String, double>{key: categories[key]!.plannedBalance}.entries);
         }
