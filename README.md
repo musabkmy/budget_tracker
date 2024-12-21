@@ -14,7 +14,7 @@
 
 The Budget Application is inspired by the Buddy App, designed to help users efficiently manage their finances. Whether it's creating budgets, setting savings goals, or tracking expenses, this app ensures financial clarity and discipline.
 
-This app is a **work in progress**, with more features being actively developed to enhance the user experience.
+This app is a **work in progress**, with more features being actively developed.
 
 ---
 
