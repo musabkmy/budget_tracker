@@ -43,7 +43,7 @@ This app is a **work in progress**, with more features being actively developed.
 ## **Demo**
 
 1. **Create Budget**:
-   ![1](assets/screenshots/create_budget/create_budget_video.MP4)
+   ![1](assets/screenshots/create_budget/create_budget_video.mp4)
    ![2](assets/screenshots/create_budget/create_budget_1.PNG)
    ![3](assets/screenshots/create_budget/create_budget_2.PNG)
    ![4](assets/screenshots/create_budget/create_budget_3.PNG)
