@@ -1,5 +1,5 @@
 import 'package:budget_tracker/config/dependency_injection/di_ex.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/features/budget/data/models/budget.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_status.dart';

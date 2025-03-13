@@ -1,5 +1,6 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/animation/animation_service.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/core/widgets/period_picker.dart';
@@ -101,7 +102,7 @@ class _StartSetupViewState extends State<StartSetupView> {
                     onSelectedItemChanged: (index) =>
                         _changeBudgetPeriod(index),
                   ),
-                ],
+                ].animateBlurEffect(),
               ),
               _ContinueButton(
                   nameTextEditingController: _nameTextEditingController,

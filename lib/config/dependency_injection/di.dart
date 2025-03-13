@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:budget_tracker/core/animation/animation_service.dart';
+import 'package:budget_tracker/core/animation/animation_service_auto_animate_service_impl.dart';
 import 'package:budget_tracker/core/providers/focus_nodes_manager_provider.dart';
 import 'package:budget_tracker/core/settings/shared_preferences_service.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
@@ -37,6 +39,10 @@ Future<void> setupDi() async {
   di.registerSingleton(BudgetRepository(
     di<BudgetDataBaseProvider>(),
   ));
+
+  // Animation service
+  final AnimationService animationService = AutoAnimateServiceImpl();
+  di.registerSingleton<AnimationService>(animationService);
 
   // Blocs
   // get all budgets metadata

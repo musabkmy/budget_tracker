@@ -1,6 +1,6 @@
 import 'package:budget_tracker/config/theme/app_icons.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/core/widgets/app_sliver_navigation.dart';
 import 'package:budget_tracker/core/widgets/app_sliver_tab.dart';

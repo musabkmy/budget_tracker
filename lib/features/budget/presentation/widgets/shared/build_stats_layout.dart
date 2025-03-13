@@ -1,6 +1,6 @@
 import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_head_categories.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
@@ -29,6 +29,7 @@ class BuildStatsLayout extends StatelessWidget {
     AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return ListView(
         shrinkWrap: shrinkWrap,
+        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.only(top: fromViewBudget ? 0 : aSpPadding24),
         children: _buildStatsLayout(context, appLocalizations, fromViewBudget,
             headCategories, totalIncomeAndPlannedExpenses,

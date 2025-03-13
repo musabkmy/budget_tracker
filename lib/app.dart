@@ -60,8 +60,8 @@ class MyApp extends StatelessWidget {
                 AppLocalizations.of(context)!.appTitle,
             // title: AppLocalizations.of(context)!.appTitle,
             debugShowCheckedModeBanner: false,
-            theme:
-                appTheme(brightness: MediaQuery.of(context).platformBrightness),
+            theme: appTheme(brightness: Brightness.dark),
+            // appTheme(brightness: MediaQuery.of(context).platformBrightness),
             home: MainBudgetPage(),
           ),
         ),

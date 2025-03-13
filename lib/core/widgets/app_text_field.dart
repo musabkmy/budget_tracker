@@ -1,7 +1,6 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 
 class AppTextfield extends StatelessWidget {
   final String title;
