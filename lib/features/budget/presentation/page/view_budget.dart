@@ -1,6 +1,5 @@
 import 'package:budget_tracker/config/dependency_injection/di.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/animation/animation_service.dart';
 import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
 import 'package:budget_tracker/core/providers/focus_nodes_manager_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
@@ -60,16 +59,15 @@ class _ViewBudgetState extends State<ViewBudget> {
                     child: BuildPlanBudgetPeriodLayout(),
                   ),
                 ),
-                // SliverToBoxAdapter(
-                //   child: BuildPlanPlannedExpensesLayout(),
-                // ),
+                SliverToBoxAdapter(
+                  child: BuildPlanPlannedExpensesLayout(),
+                ),
                 SliverPadding(
                   padding: EdgeInsets.symmetric(horizontal: aSpPadding16),
-                  sliver: SliverFillRemaining(
-                      hasScrollBody: true,
-                      fillOverscroll: true,
-                      child: BuildPlanHeadCategoriesLayout(
-                          _planHeadCategoriesScrollController)),
+                  sliver: SliverToBoxAdapter(
+                    child: BuildPlanHeadCategoriesLayout(
+                        _planHeadCategoriesScrollController),
+                  ),
                 )
               ],
             ))

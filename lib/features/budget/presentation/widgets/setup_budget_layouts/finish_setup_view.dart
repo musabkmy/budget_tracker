@@ -7,7 +7,7 @@ import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
 
 class FinishSetupView extends StatelessWidget {
   const FinishSetupView({super.key});

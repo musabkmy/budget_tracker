@@ -6,7 +6,8 @@ import 'package:budget_tracker/features/budget/data/models/budget_head_categorie
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_layouts_info.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/flexible_dots.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
+
 import 'package:flutter/cupertino.dart';
 
 class BuildStatsLayout extends StatelessWidget {

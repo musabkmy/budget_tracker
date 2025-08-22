@@ -7,7 +7,8 @@ import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/create_budget_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
+
 import 'package:provider/provider.dart';
 
 class StartCreatingBudget extends StatelessWidget {
@@ -83,7 +84,7 @@ class BuildSetupLayout extends StatelessWidget {
                   ],
                 ),
                 textAlign: TextAlign.center,
-              ).fadeOutIn()
+              ).fadeOutIn(key: 'BuildSetupLayout')
             ],
           ),
         ));

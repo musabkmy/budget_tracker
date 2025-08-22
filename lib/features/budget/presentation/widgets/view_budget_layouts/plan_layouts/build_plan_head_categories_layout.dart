@@ -12,25 +12,14 @@ class BuildPlanHeadCategoriesLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetBudgetBloc, GetBudgetState>(
       builder: (context, state) {
-        final items = state.budget!.headCategories.keys.toList();
+        // final items = state.budget!.headCategories.keys.toList();
         return state.isCompleted
-            ? ListView.builder(
-                controller: scrollController,
-                padding: EdgeInsets.zero,
-                primary: false,
-                physics: ClampingScrollPhysics(),
-                itemCount: items.length,
-                itemBuilder: (context, index) =>
-                    BuildPlanHeadCategory(budgetHeadCategoryKey: items[index])
-                        .fadeOutIn(
-                  key: items[index],
-                  // durationInMilSec: 50,
-                  // scrollController: scrollController,
-                ),
-                // children: state.budget!.headCategories.keys
-                //     .map((elementKey) => BuildPlanHeadCategory(
-                //         budgetHeadCategoryKey: elementKey))
-                //     .toList(),
+            ? Column(
+                children: state.budget!.headCategories.keys
+                    .map((elementKey) =>
+                        BuildPlanHeadCategory(budgetHeadCategoryKey: elementKey)
+                            .fadeOutIn(key: elementKey))
+                    .toList(),
               )
             // .scrollAdapterAnimation(scrollController: scrollController)
             : SizedBox();

@@ -20,7 +20,7 @@ abstract class AnimationService {
 extension WidgetAnimationServiceEx on Widget {
   Widget fadeOutIn(
       {double durationInMilSec = 600,
-      String? key,
+      required String key,
       ScrollController? scrollController}) {
     final service = GetIt.instance<AnimationService>();
     return service.fadeOutIn(this, durationInMilSec, key, scrollController);

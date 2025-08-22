@@ -6,7 +6,8 @@ import 'package:budget_tracker/features/budget/data/models/budget_period.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_period_type.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuildPlanBudgetPeriodLayout extends StatelessWidget {
