@@ -1,6 +1,6 @@
 import 'package:budget_tracker/config/theme/app_theme.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/widgets/app_divider.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/core/providers/editing_numeric_field_provider.dart';
@@ -8,7 +8,6 @@ import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/core/widgets/app_circular_avatar.dart';
 import 'package:budget_tracker/features/budget/data/models/budget_category.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 

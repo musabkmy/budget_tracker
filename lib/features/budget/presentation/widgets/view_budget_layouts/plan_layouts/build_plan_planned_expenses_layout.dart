@@ -21,8 +21,7 @@ class BuildPlanPlannedExpensesLayout extends StatelessWidget {
                 // height: context.heigh * .4,
                 margin: EdgeInsets.all(aSpPadding16),
 
-                padding:
-                    EdgeInsets.only(top: aSpPadding32, bottom: aSpPadding24),
+                padding: EdgeInsets.only(top: aSpPadding32),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: CupertinoTheme.of(context).barBackgroundColor,

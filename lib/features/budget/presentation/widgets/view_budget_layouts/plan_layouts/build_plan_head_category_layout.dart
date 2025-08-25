@@ -1,12 +1,13 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/providers/focus_nodes_manager_provider.dart';
 import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/core/widgets/app_divider.dart';
 import 'package:budget_tracker/features/budget/presentation/bloc/get_budget/get_budget_bloc.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/view_budget_layouts/plan_layouts/build_plan_budget_category_layout.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 

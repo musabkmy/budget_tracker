@@ -1,5 +1,6 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/animation/animation_service.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/core/utils/extensions.dart';
 import 'package:budget_tracker/core/widgets/action_buttons.dart';
 import 'package:budget_tracker/core/widgets/period_picker.dart';
@@ -10,7 +11,8 @@ import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/c
 import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/new_budget_setup_info.dart';
 import 'package:budget_tracker/features/budget/presentation/providers/create_budget_popup_appearance_provider.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/shared/build_setup_title_subtitle.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -101,7 +103,7 @@ class _StartSetupViewState extends State<StartSetupView> {
                     onSelectedItemChanged: (index) =>
                         _changeBudgetPeriod(index),
                   ),
-                ],
+                ].animateBlurEffect(),
               ),
               _ContinueButton(
                   nameTextEditingController: _nameTextEditingController,

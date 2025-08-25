@@ -25,6 +25,18 @@ class _ViewBudgetState extends State<ViewBudget> {
     context.read<GetBudgetBloc>().add(GetBudgetData(key: widget.budgetKey));
   }
 
+  final ScrollController _planHeadCategoriesScrollController =
+      ScrollController();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _planHeadCategoriesScrollController
+        .dispose(); // Always dispose to prevent memory leaks
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -37,7 +49,8 @@ class _ViewBudgetState extends State<ViewBudget> {
       child: context.watch<GetBudgetBloc>().state.isCompleted
           ? CupertinoPageScaffold(
               child: CustomScrollView(
-              physics: ClampingScrollPhysics(),
+              controller: _scrollController,
+              // physics: ClampingScrollPhysics(),
               slivers: [
                 BuildViewBudgetTopNav(),
                 SliverPadding(
@@ -50,9 +63,11 @@ class _ViewBudgetState extends State<ViewBudget> {
                   child: BuildPlanPlannedExpensesLayout(),
                 ),
                 SliverPadding(
-                  padding: EdgeInsets.all(aSpPadding16),
+                  padding: EdgeInsets.symmetric(horizontal: aSpPadding16),
                   sliver: SliverToBoxAdapter(
-                      child: BuildPlanHeadCategoriesLayout()),
+                    child: BuildPlanHeadCategoriesLayout(
+                        _planHeadCategoriesScrollController),
+                  ),
                 )
               ],
             ))

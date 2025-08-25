@@ -1,4 +1,4 @@
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/config/theme/shared_values.dart';
 import 'package:flutter/cupertino.dart';
 

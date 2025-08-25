@@ -1,5 +1,5 @@
 import 'package:budget_tracker/config/theme/shared_values.dart';
-import 'package:budget_tracker/core/extensions/build_context.dart';
+import 'package:budget_tracker/core/extensions/build_context_extension.dart';
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/start_creating_budget.dart';
 import 'package:flutter/cupertino.dart';
 

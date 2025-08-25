@@ -9,7 +9,8 @@ import 'package:budget_tracker/features/budget/presentation/bloc/create_budget/c
 import 'package:budget_tracker/features/budget/presentation/widgets/setup_budget_layouts/build_setup_head_budget_layout.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:budget_tracker/config/localization/app_localizations.dart';
+
 import 'package:flutter/cupertino.dart';
 
 class BudgetHeadCategorySetupView extends StatefulWidget {
